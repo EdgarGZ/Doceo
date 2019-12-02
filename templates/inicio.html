@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="bg"></div>
+	<!-- modal -->
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error6">
+		<h2>Correo electrónico y/o contraseña incorrectos</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error7">
+		<h2>Completa todos los campos solicitados</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+	<!-- fin de modal -->
+
+	<div class="container-fluid altura">
+		<div class="landing inicio col-xs-12">
+			<center class="col-md-12">
+				<img src="{% static 'img/logo.png' %}" class="logo">
+				<h3 class="col-md-12 col-xs-12 h3-inicio">Iniciar sesión</h3>
+			</center>
+			<div class="hidden-md vacio2"></div>
+			<div class="formulario-inicio flex-column col-md-4 col-md-offset-4 col-xs-12 col-sm-5">
+				<img src="{% static 'img/user.png' %}">
+				<p class="col-md-11">Correo electrónico</p>
+				<div class="input-group col-md-11 col-sm-11 col-xs-11">
+				  <span class="input-group-addon" id="basic-addon1"><img class="icon" src="{% static 'img/us.png' %}"></span>
+				  <input type="text" class="form-control" placeholder="Correo electrónico">
+				</div>
+				<p class="col-md-11">Contraseña</p>
+				<div class="input-group col-md-11 col-sm-11 col-xs-11">
+				  <span class="input-group-addon" id="basic-addon1"><img class="icon" src="{% static 'img/pass.png' %}"></span>
+				  <input type="text" class="form-control" placeholder="Contraseña">
+				</div>
+				<div class="flex input-group col-md-11 boton">
+				  <button class="col-md-4">Iniciar sesión</button>
+				</div>
+				<a href="{% url 'recuperarPass.html' %}">Olvidé mi contraseña</a>
+			</div>
+			<a href="{% url 'registro.html' %}" class="flex">No tengo una cuenta</a>
+		</div>
+	</div>
+{% endblock content %}

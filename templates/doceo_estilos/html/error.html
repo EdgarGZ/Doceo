@@ -1,0 +1,20 @@
+{% extends 'base/index2.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="container-fluid altura">
+		<div class="error flex-column col-xs-12 col-md-12">
+			<center class="col-md-12">
+				<img src="{% static 'img/sad.png' %}" class="alert">
+			</center>
+			<center class="col-md-6 mensaje">
+				<h2>¡Oh, no!</h2>
+				<h3>Lo sentimos.</h3>
+				<p>Algún error ha ocurrido durante la navegación. <br> Intenta más tarde</p>
+				<img src=".{% static 'img/logo.png' %}" class="logo">
+			</center>
+		</div>
+	</div>
+{% endblock content %}

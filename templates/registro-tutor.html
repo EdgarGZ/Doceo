@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	Título de la página
+{% endblock title %}
+
+{% block content %}
+	<div class="bg"></div>
+	<!-- modal -->
+	{% comment %}<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error1">
+		<h2>Correo electrónico no válido</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error2">
+		<h2>La contraseña debe tener un mínimo de 8 caracteres y un máximo de 16 caracteres</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error3">
+		<h2>Completa todos los campos solicitados</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error4">
+		<h2>Elije un formato de imagen válido</h2>
+		<p>Por ejemplo: JPG, JPEG, PNG</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error5">
+		<h2>Las contraseñas no coinciden</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>{% endcomment %}
+	<!-- fin de modal -->
+
+	<div class="container-fluid altura">
+		<div class="landing inicio col-xs-12 col-md-12">
+			<center class="col-md-12">
+				<img src="{% static 'img/logo.png' %}" class="logo">
+				<h3 class="col-md-12 col-xs-12 h3-inicio">Registrarse como tutor</h3>
+			</center>
+			<div class="col-md-2 hidden-xs hidden-sm"></div>
+			<form class="formulario-registro flex-column" action="{% url 'users:sign_up_tutor' %}" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="col-xs-12">
+				  <span>Nombre de usuario</span>
+				  {% comment %}<input type="text" class="form-control" placeholder="Escribe tu nombre completo">{% endcomment %}
+				  {{ form.username }}
+				</div>
+				<div class="col-xs-12">
+					<span>Nombre completo</span>
+					{{ user_form.nombre }}
+					{% comment %}<input type="text" class="form-control" placeholder="Escribe tu nombre completo">{% endcomment %}
+				</div>
+				<div class="col-xs-12">
+				  <span>Correo</span>
+				  {{ user_form.correo }}
+				  {% comment %}<input type="email" class="form-control" placeholder="Escribe tu correo electrónico" required>{% endcomment %}
+				</div>
+				<div class="col-xs-12">
+				  <span>Expediente</span>
+				  {{ user_form.expediente }}
+				  {% comment %}<input type="number" class="form-control" onKeyDown="if(this.value.length==6 && event.keyCode!=8) return false;" placeholder="Escribe tu expediente">{% endcomment %}
+				</div>
+				<div class="col-xs-12">
+					<span>Semestre</span>
+					{{ tutor_form.semestre }}
+					{% comment %}<select class="form-control">
+				  		<option hidden="true">Selecciona tu semestre</option>
+				  		<option>1ero</option>
+				  	</select>{% endcomment %}
+				</div>
+				<div class="col-xs-12">
+					<span>Carrera</span>
+					{{ tutor_form.carrera }}
+					{% comment %}<select class="form-control">
+				  		<option>SOF11</option>
+				  	</select>{% endcomment %}
+				</div>
+				<div class="col-xs-12">
+					<span>Área de especialidad</span>
+					{{ tutor_form.area_especialidad }}
+					{% comment %}<datalist id="areas">
+					  <option value="Matemáticas">
+					  <option value="Programación">
+					  <option value="Base de datos">
+					  <option value="Redes">
+					</datalist>
+					<input type="text" list="areas" id="areas" value="" size="50" name="areas" placeholder="Escribe las áreas de conocimiento" class="form-control">
+					<span class="indc">Escribe las áreas separadas por coma (,)</span>{% endcomment %}
+				</div>
+				<div class="col-xs-12">
+				  <span>Foto de perfil</span>
+				  {{ user_form.foto }}
+				  {% comment %}<input type="file" class="">{% endcomment %}
+				</div>
+				<div class="col-xs-12">
+				  <span>Contraseña</span>
+				  {{ form.password }}
+				  {% comment %}<input type="password" class="form-control" maxlength="16" minlength="8" placeholder="Escribe tu contraseña">{% endcomment %}
+				</div>
+				<div class="col-xs-12">
+					<span>Repetir contraseña</span>
+					{{ form.password_confirmation }}
+					{% comment %}<input type="password" class="form-control" maxlength="16" minlength="8" placeholder="Vuelve a escribir tu contraseña">{% endcomment %}
+				</div>
+				<div class="flex input-group col-md-11 boton">
+				  <button class="col-md-4" onclick="error()">Registrarme</button>
+				</div>
+			</form>
+			<div class="col-md-2 hidden-xs hidden-sm"></div>
+			<a class="col-xs-12 col-md-12" href="{% url 'users:login_view' %}">Ya tengo un perfil</a>
+		</div>
+	</div>
+
+	{% comment %}
+	<script type="text/javascript">
+		var datalist = jQuery('datalist');
+		var options = jQuery('datalist option');
+		var optionsarray = jQuery.map(options ,function(option) {
+				return option.value;
+		});
+		var input = jQuery('input[list]');
+		var inputcommas = (input.val().match(/,/g)||[]).length;
+		var separator = ',';
+				
+		function filldatalist(prefix) {
+			if (input.val().indexOf(separator) > -1 && options.length > 0) {
+				datalist.empty();
+				for (i=0; i < optionsarray.length; i++ ) {
+					if (prefix.indexOf(optionsarray[i]) < 0 ) {
+						datalist.append('<option value="'+prefix+optionsarray[i]+'">');
+					}
+				}
+			}
+		}
+		input.bind("change paste keyup",function() {
+			var inputtrim = input.val().replace(/^\s+|\s+$/g, "");
+		  //console.log(inputtrim);
+			var currentcommas = (input.val().match(/,/g)||[]).length;
+		  //console.log(currentcommas);
+			if (inputtrim != input.val()) {
+				if (inputcommas != currentcommas) {
+					var lsIndex = inputtrim.lastIndexOf(separator);
+					var str = (lsIndex != -1) ? inputtrim.substr(0, lsIndex)+", " : "";
+					filldatalist(str);
+					inputcommas = currentcommas;
+				}
+				input.val(inputtrim);
+			}
+		});
+	</script>{% endcomment %}
+{% endblock content %}

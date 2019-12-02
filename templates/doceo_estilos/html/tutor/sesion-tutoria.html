@@ -1,0 +1,125 @@
+{% extends 'base/index2.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="bg"></div>
+	<!-- modal -->
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="tutoIniciada">
+		<h2>Tutoría iniciada</h2>
+		<p>El tiempo ha iniciado</p>
+		<img src="{% static 'img/start.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="tutoCancelada">
+		<p>¿Desea cancelar la tutoría?</p>
+		<p class="b">Escriba el motivo por el cuál se cancela la tutoría</p>
+		<textarea placeholder="Escribe el motivo"></textarea>
+		<div class="flex botonera">
+			<input class="cancelar" type="submit" onclick="cancelarTutoriaC()" value="Cancelar" onclick="">
+			<input class="guardar" type="submit" onclick="cancelarTutoriaC()" value="Finalizar">
+		</div>
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="tutoFinalizada">
+		<p>¿Desea finalizar la tutoría?</p>
+		<p class="b">Importante: realizar evaluación al tutorado</p>
+		<div class="flex botonera">
+			<input class="cancelar" type="submit" name="" value="Cancelar" onclick="finalizarTutoriaC()">
+			<input class="guardar" type="submit" onclick="finalizarTutoria()" value="Finalizar">
+		</div>
+	</div>
+	<!-- fin de modal -->
+
+	<!-- contenido -->
+
+	<div class="wrapper">
+		<!-- side bar -->
+		<div class="side-bar" id="sidebar">
+			<div class="logo-bar flex">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+
+			<ul class="flex-column">
+				<li><a href="{% url '' %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/historial.png' %}">Historial</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
+			</ul>
+
+			<ul class="flex-column logout">
+				<li><a href="{% url '' %}"><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+			</ul>
+		</div>
+
+		<div class="content col-xs-12" id="content">
+			<div class="top col-xs-12 col-md-12">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
+	                <span></span>
+	                <span></span>
+	                <span></span>
+	            </button>
+	            <h1 id="top">Sesión de tutoría</h1>
+	        </div>
+
+
+	        <div class="col-xs-12 col-md-12 informacion">
+				<div class="foto-perfil flex-column col-xs-12 col-sm-2 col-md-2">
+					<img class="img-responsive" src="{% static 'img/perfil.png' %}">
+				</div>
+				
+				<div class="col-xs-12 col-sm-8 col-md-8 datos">
+					<div>
+						<p><b>Matemáticas</b></p>
+						<p>Cálculo diferencial</p>
+					</div>
+					
+					<div>
+						<p>María Mendoza López</p>
+						<p>Lunes 19 de Noviembre</p>
+						<p>1:00 PM - 2:00 PM</p>
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-md-2 opciones">
+					<input type="submit" name="" value="Cancelar" class="col-xs-12 col-md-12 cancelar" onclick="cancelarTuto()">
+	        		<input type="submit" id="iniciar" value="Iniciar" class="col-xs-12 col-md-12 guardar" onclick="iniciarTuto()">
+	        		<input type="submit" name="" value="Finalizar" class="col-xs-12 col-md-12 finalizar" onclick="finalizarTuto()">
+				</div>
+			</div>
+
+			<h1>Evaluación</h1>
+			<div class="col-xs-12 col-md-12 evaluacion">
+				<p class="ind col-xs-12">Rellena el siguiente formulario una vez terminada la sesión de tutoría</p>
+
+				<div class="col-xs-12 col-md-12 datos-basicos noborder">
+		        	<div class="col-xs-12 col-md-12">
+		        		<b class="">Calificación </b><span class="col-xs-12 col-md-10"><input type="number" name="" value="" class="dato" placeholder="Número entero, no decimal"></span>
+		        	</div>
+		        	<div class="col-xs-12 col-md-12">
+		        		<b class="">Evidencia fotográfica </b><span class="col-xs-12 col-md-10"><input type="file" name="" value="" class=""></span>
+		        	</div>
+		        	<div class="col-xs-12 col-md-12">
+		        		<b>Notas </b><span class="col-xs-12 col-md-10"><textarea class="" placeholder="Escribe aquí las notas que desees"></textarea></span>
+		        	</div>
+		        </div>
+			</div>
+
+
+			
+			
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+{% endblock content %}

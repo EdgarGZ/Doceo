@@ -1,0 +1,105 @@
+{% extends 'base/index2.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="bg"></div>
+
+	<!-- contenido -->
+
+	<div class="wrapper" id="wrapper">
+		<!-- side bar -->
+		<div class="side-bar" id="sidebar">
+			<div class="logo-bar flex">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+
+			<ul class="flex-column">
+				<li><a href="{% url '' %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/tutores.png' %}">Tutores</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/historial.png' %}">Historial</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
+			</ul>
+
+			<ul class="flex-column logout">
+				<li><a href="{% url '' %}"><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+			</ul>
+		</div>
+
+		<div class="content col-xs-12" id="content">
+			<div class="top col-xs-12 col-md-12">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
+	                <span></span>
+	                <span></span>
+	                <span></span>
+	            </button>
+	            <h1 id="top" class="hidden-xs">Preguntas frecuentes</h1>
+	            <h1 id="top" class="hidden-sm hidden-md hidden-lg">Preguntas <br> frecuentes</h1>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 qa">
+	        	<h2>General</h2>
+	        	<h3>¿Qué es Doceo?</h3>
+	        	<p class="justify">Doceo es una plataforma para la enseñanza/refuerzo de conocimientos entre alumnos. Doceo te brinda la comodidad y la confianza de interactuar con tus compañeros para aprender de una manera más amigable.</p>
+
+	        	<h3>Al usar Doceo, ¿tengo que pagar por las sesiones de tutoría?</h3>
+	        	<p class="justify">No, el servicio y las sesiones de tutoría no tienen costo.</p>
+
+	        	<h3>¿Puedo desactivar mi cuenta?/¿Cómo desactivo mi cuenta?</h3>
+	        	<p class="justify">Sí. En el apartado "Editar perfil" se encuentra la opción de desactivar tu cuenta. Si decides eliminar tu cuenta, tienes un período de 28 días para activarla nuevamente, de lo contrario, se eliminará de forma permanente</p>
+
+	        	<h3>¿Cómo reactivo mi cuenta?</h3>
+	        	<p class="justify">Solamente tienes que iniciar sesión de manera normal y se activará automáticamente si no han pasado 28 días desde que elegiste desactivarla.</p>
+
+	        	<h3>¿Puedo cambiar mis datos?</h3>
+	        	<p class="justify">Sí. En el apartado "Editar perfil" puedes elegir qué datos quieres cambiar. Algunos no son editables, por ejemplo, el expediente.</p>
+
+	        	<h3>¿Con quién puedo reportar un problema?</h3>
+	        	<p class="justify">Si tienes cualquier tipo de problema, ya sea con el sistema o con algún usuario, por favor repórtalo a doceotutorias@gmail.com</p>
+
+	        	<h3>¿Dónde puedo dejar alguna queja o sugerencia?</h3>
+	        	<p class="justify">Puedes escribir a doceotutorias@gmail.com</p>
+
+	        	<h3>¿Cómo son usados mis datos personales?</h3>
+	        	<p class="justify">Contamos con un aviso de seguridad donde describimos detalladamente cómo son usados tus datos. <a href="{% url '' %}">Descárgalo aquí</a>.</p>
+
+	        	<h2>Tutores</h2>
+
+	        	<h3>Si soy tutor, ¿puedo ser también tutorado y viceversa?</h3>
+	        	<p class="justify">Sí, pero tienes que crear una nueva cuenta con el perfil de tutor o tutorado.</p>
+
+	        	<h3>¿Cómo puedo ser tutor?</h3>
+	        	<p class="justify">Regístrate como tutor, seguido de esto, un profesor registrado revisará tus datos y determinará si se acepta tu solicitud. Se te notificará inmediatamente.</p>
+
+	        	<h3>¿Qué beneficios obtengo al ser tutor?</h3>
+	        	<p class="justify">Puedes acumular horas de servicio social, participar por becas alimenticias en la facultad y sobre todo, la satisfacción de enseñar y ayudar a tus compañeros.</p>
+
+	        	<h2>Tutorados</h2>
+
+	        	<h3>¿Cómo busco si existen sesiones para las áreas que quiero aprender?</h3>
+	        	<p class="justify">En tu página "Mis tutorías" se encuentra un buscador. Simplemente ingresa el área de tu interés y como resultado podrás observar si existen resultados que coincidan.</p>
+
+	        	<h3>¿Puedo cancelar o suspender una sesión de tutoría?</h3>
+	        	<p class="justify">Sí. En el apartado "Mis tutorías" aparecerán tus sesiones próximas, solamente tienes que seleccionar la sesión a cancelar y dar clic en la parte de opciones, selecciona "Cancelar tutoría", el sistema arrojará un breve formulario, das clic en el botón "Cancelar" y listo, se notificará a tu tutor o tutorado.</p>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 arriba">
+				<a href="#top">Volver arriba</a>
+			</div>
+
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+            	$('#wrapper').toggleClass('active');
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+{% endblock content %}

@@ -1,0 +1,123 @@
+{% extends 'tutored/index.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Título de la página
+{% endblock title %}
+
+{% block content %}
+	<div class="bg"></div>
+
+	<!-- modal -->
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="notificacion">
+		<p class="b">Programación en Python</p>
+		<p class="b">Martes 20 de noviembre</p>
+		<p class="b">11:00 AM - 12:00 PM</p>
+		<p>Importante: Debe de estar al pendiente de la confirmación por parte del tutor.</p>
+		<div class="flex botonera">
+			<input class="cancelar" type="submit" name="" value="Cancelar" onclick="cancelarAgenda()">
+			<input class="guardar" type="submit" name="" value="Aceptar" onclick="aceptarTuto()">
+		</div>
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="tutoCheck">
+		<h2>Tutoría agendada</h2>
+		<p>Se ha agregado a tus horarios</p>
+		<img src="{% static 'img/check.png' %}" class="check">
+	</div>
+
+	<!-- fin de modal -->
+
+	<!-- contenido -->
+
+	<div class="wrapper" id="wrapper">
+		<!-- side bar -->
+		<div class="side-bar" id="sidebar">
+			<div class="logo-bar flex">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+
+			<ul class="flex-column">
+				<li><a href=""><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href=""><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href=""><img src="{% static 'img/historial.png' %}">Historial</a></li>
+				<li><a href=""><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
+			</ul>
+
+			<ul class="flex-column logout">
+				<li><a href=""><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+			</ul>
+		</div>
+
+		<div class="content col-xs-12" id="content">
+			<h1>Notificaciones</h1>
+			<div class="col-xs-12 col-md-12 notificaciones">
+				<p><a href="">José Emmanuel Gutiérrez Hernández</a> ha aceptado la tutoría Paradigmas de la Programación | <a onclick="verNoti()">Ver detalles</a></p>
+			</div>
+			<div class="top col-xs-12 col-md-12">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
+	                <span></span>
+	                <span></span>
+	                <span></span>
+	            </button>
+	            <h1 id="top" class="hidden-xs">Tutorías pendientes</h1>
+	            <h1 id="top" class="hidden-sm hidden-md hidden-lg">Tutorías <br> pendientes</h1>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 tutorias">
+	        	<div class="tutoria flex-column">
+	        		<div class="media-dos prog2">
+	        			<p class="a">Programación</p>
+	        			<p>Paradigmas de la programación</p>
+	        		</div>
+	        		<img src="{% static 'img/perfil.png' %}">
+	        		<div class="media-tres flex-column">
+	        			<p>José Emmanuel Gutiérrez</p>
+	        			<p>Viernes 23</p>
+	        			<p>10:00 AM - 12:00 PM</p>
+	        			<a href="">Opciones</a>
+	        		</div>
+	        	</div>
+	        </div>
+
+	        <h1>Buscar tutoría</h1>
+
+	        <div class="col-xs-12 col-md-12 search" style="margin-top: 10px;">
+	        	<div class="flex col-xs-12 buscador">
+	        		<input type="search" name="" placeholder="Escribe aquí la nombre de la tutoría deseada" class="col-xs-8 col-md-5">
+	        		<input type="submit" name="" value="Buscar" class="col-xs-4 col-md-2">
+	        	</div>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 busqueda">
+	        	<details>
+				  <summary>Matemáticas</summary>
+					<div class="col-xs-12 col-md-3 horario">
+		        		<h3>Álgebra lineal</h3>
+		        		<p><b>Sesión:</b> Lunes 5:00 PM</p>
+		        		<p><b>Tutor:</b> Daniel Gutiérrez Gómez</p>
+		        		<div class="col-xs-12 col-md-12 flex botones">
+		        			<input type="submit" onclick="agendarTutoria()" value="Agendar" class="col-md-5 finalizar">
+		        			<input type="submit" value="Ver perfil" class="col-md-5 guardar">
+		        		</div>
+		        	</div>
+				</details>
+	        </div>
+
+			
+			
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+            	$('#wrapper').toggleClass('active');
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+{% endblock content %}

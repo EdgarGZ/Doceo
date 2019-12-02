@@ -1,0 +1,108 @@
+{% extends 'base/index1.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="bg"></div>
+
+	<!-- modal -->
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="addAreaS">
+		<h2>Área de conocimiento agregada</h2>
+		<p>Disponible para usar</p>
+		<img src="{% static 'img/check.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="eleArea">
+		<p>¿Desea eliminar el área de conocimiento seleccionada?</p>
+		<div class="flex botonera">
+			<input class="cancelar" type="submit" onclick="eliminarAreaSC()" value="Cancelar">
+			<input class="guardar" type="submit" onclick="eliminarAreaS()" value="Eliminar">
+		</div>
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="eleAreaS">
+		<h2>Área de conocimiento eliminada</h2>
+		<p>Se ha borrado de la base de datos</p>
+		<img src="{% static 'img/trash.png' %}" class="check">
+	</div>
+
+	<!-- fin de modal -->
+
+	<!-- contenido -->
+	<div class="wrapper" id="wrapper">
+		<!-- side bar -->
+		<div class="side-bar" id="sidebar">
+			<div class="logo-bar flex">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+
+			<ul class="flex-column">
+				<li><a href="{% url '' %}"><img src="{% static 'img/us.png' %}">Tutores</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/tutores.png' %}">Tutorados</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/profesor.png' %}">Profesores</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/foco.png' %}">Áreas de conocimiento</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/historial.png' %}">Estadísticas</a></li>
+			</ul>
+
+			<ul class="flex-column logout">
+				<li><a href="{% url '' %}"><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+			</ul>
+		</div>
+
+		<div class="content col-xs-12" id="content">
+			<div class="top col-xs-12 col-md-12">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
+	                <span></span>
+	                <span></span>
+	                <span></span>
+	            </button>
+	            <h1 id="top" class="hidden-xs">Agregar área de conocimiento</h1>
+	            <h1 id="top" class="hidden-sm hidden-md hidden-lg">Agregar área <br> de conocimiento</h1>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 datos-basicos">
+	        	<p>Todos los datos deberán ser llenados con información correcta.</p>
+	        	<div class="col-xs-12 col-md-12">
+	        		<b class="">Nombre de área </b><span class="col-xs-12 col-md-10"><input type="text" name="" value="" class="dato" placeholder="Ej. Programación Orientada a Objetos"></span>
+	        	</div>
+	        	<div class="col-xs-12 col-md-12">
+	        		<b>Categorías </b><span class="col-xs-12 col-md-10"><input type="text" name="" value="" class="dato" placeholder="Ej. Programación"></span>
+	        	</div>
+	        	<div class="col-xs-12 col-md-12 botones">
+	        		<input type="submit" onclick="agregarArea()" value="Agregar" class="col-xs-auto col-md-2 guardar">
+	        		<input type="submit" onclick="borrarCampos()" value="Borrar" class="col-xs-auto col-md-2 cancelar">
+	        	</div>
+	        </div>
+
+	        <h1>Áreas de conocimiento</h1>
+
+	        <div class="col-xs-12 col-md-12 search">
+	        	<div class="flex col-xs-12 buscador">
+	        		<input type="search" name="" placeholder="Escribe aquí el área de conocimiento" class="col-xs-9 col-md-4">
+	        		<input type="submit" name="" value="Buscar" class="col-xs-3 col-md-1">
+	        	</div>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 admin-tutores flex-column">
+	        	<div class="col-xs-12 col-md-11 admin-tutor flex">
+	        		<p class="col-md-3 col-xs-12"></p>
+	        		<a class="col-md-3 col-xs-12" onclick="eliminarArea()">Eliminar área</a>
+	        	</div>
+	        </div>
+			
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+            	$('#wrapper').toggleClass('active');
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+{% endblock content %}

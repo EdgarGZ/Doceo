@@ -1,0 +1,1984 @@
+:root{
+	--principal: #5CD2BF;
+	--blanco: #F7F7F7;
+	--negro: #646464;
+	--enlaceregistro: #6C7A9D;
+	--opcion: #E5E5E5;
+	--letrasside: #897E7E;
+	--titulo: #4B4B4B;
+	--comentario: #F0EFEF;
+	--cancelar: #F50413;
+	--bordes: #F0EFEF;
+	--iniciar: #5174CE;
+}
+
+*{
+	padding: 0px;
+	margin: 0px;
+	font-family: 'Roboto', sans-serif;
+	cursor: default;
+}
+
+html, body{
+	height: auto;
+	width: 100%;
+}
+
+/*estilos globales y reutilizables*/
+.altura{
+	height: 100%;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+.flex{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+.flex-column{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.wrapper{
+	display: flex;
+	width: 100%;
+}
+.left{
+	justify-content: left !important;
+}
+
+.nomargin{
+	margin-left: 0px !important;
+}
+
+.top{
+	height: auto;
+	line-height: 20px;
+}
+	.top h1{
+		margin-top: 8px !important;
+		margin-bottom: 0px !important;
+		margin-left: 10px;
+		float: left;
+		position: relative;	
+	}
+	input, button, a{
+		outline: none;
+	}
+.hidden{
+	display: none;
+}
+
+.bg{
+	width: 100% !important;
+	height: 100% !important;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	z-index: 99999;
+	background: rgba(0,0,0,.6);
+	display: none;
+}
+	.ver-bg{
+		display: block !important;
+		transition: all .6s;
+	}
+
+/*molde para alerts*/
+.molde{
+	width: 40%;
+	height: auto;
+	float: left;
+	position: fixed;
+	z-index: 99999;
+	background: var(--blanco);
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	display: none;
+	top: 50%;
+	margin-top: -150px;
+	left: 50%;
+	margin-left: -20%;
+}
+	.ver-molde{
+		display: block !important;
+		transition: all .6s;
+	}
+	.molde .clo{
+		height: 20px;
+		float: right !important;
+		margin-top: -20px;
+		margin-right: -20px;
+		cursor: pointer;
+	}
+	.molde h2{
+		text-align: center;
+		font-size: 1.5em;
+		font-weight: 600;
+		color: var(--negro);
+	}
+	.molde p{
+		text-align: center;
+		font-size: 1em;
+		font-weight: 300;
+		color: var(--negro);
+	}
+	.molde .b{
+		text-align: center;
+		font-size: 1em;
+		font-weight: 500;
+		color: var(--negro);
+	}
+	.molde a{
+		color: var(--principal);
+		cursor: pointer;
+		text-decoration: none;
+	}
+	.molde select{
+		width: 50%;
+		margin-left: calc(50% - 25%);
+		float: left;
+		position: relative;
+		height: 30px;
+		background: var(--comentario);
+		border-radius: 5px;
+		border: none;
+		cursor: pointer;
+		outline: none;
+	}
+	.molde>input{
+		width: 20%;
+		height: auto;
+		border-radius: 5px;
+		padding: 2px;
+		box-sizing: border-box;
+		border: none;
+		color: var(--blanco);
+		font-weight: 600;
+		text-align: center;
+		line-height: 30px;
+		cursor: pointer;
+		text-decoration: none;
+		margin-top: 20px;
+		margin-left: calc(50% - 8%);
+		background-color: var(--principal);
+	}
+	.molde .text{
+		width: 80%;
+		height: auto;
+		border-radius: 5px;
+		padding: 2px;
+		box-sizing: border-box;
+		border: none;
+		color: var(--negro);
+		font-weight: 300;
+		text-align: center;
+		line-height: 30px;
+		cursor: auto;
+		outline: none;
+		text-decoration: none;
+		margin-top: 10px;
+		background-color: white;
+		margin-left: calc(50% - 40%) !important;
+	}
+	.botonera{
+		width: 100%;
+		float: left;
+		position: relative;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		justify-content: space-between !important;
+	}
+		.botonera input{
+			width: 30%;
+			height: auto;
+			border-radius: 5px;
+			padding: 2px;
+			box-sizing: border-box;
+			border: none;
+			color: var(--blanco);
+			font-weight: 600;
+			text-align: center;
+			line-height: 30px;
+			cursor: pointer;
+			text-decoration: none;
+			margin-top: 5px;
+			margin-left: 10px;
+			float: left;
+			position: relative;
+		}
+	.molde .check{
+		height: 80px;
+		margin-left: calc(50% - 40px);
+		margin-bottom: 10px;
+	}
+	.molde .link{
+		z-index: 999999 !important;
+	}
+	.molde>textarea{
+		width: 100%;
+		height: 80px !important;
+		padding: 10px !important;
+		box-sizing: border-box;
+		resize: none;
+		background: var(--comentario);
+		border: none;
+		border-radius: 5px;
+		color: var(--negro);
+		outline: none;
+		cursor: auto;
+		float: left;
+		position: relative;
+		/*margin-bottom: 30px;*/
+	}
+	.justify{
+		text-align: justify !important;
+		color: var(--negro) !important;
+	}
+
+/*notificaciones generales*/
+.notificaciones{
+	float: left;
+	position: relative;
+	height: auto;
+	margin-bottom: 5px;
+}
+	.notificaciones p{
+		font-size: 1em;
+		color: var(--negro);
+		padding-left: 5px !important;
+	}
+	.notificaciones a{
+		text-decoration: none;
+		color: var(--principal);
+		cursor: pointer;
+	}
+
+/*barra lateral*/
+.side-bar{
+	max-width: 250px;
+	min-width: 250px;
+    transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+    transform-origin: bottom left;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	justify-content: space-between !important;
+	border-right: 1px solid rgba(0,0,0,.1);
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+}
+.side-bar.active {
+    margin-left: -250px;
+    transition: all .6s;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+}
+	.logo-bar{
+		float: left;
+		position: relative;
+		height: 80px;
+		width: 100%;
+		border-bottom: 1px solid rgba(0,0,0,.1);
+	}
+	.logo-bar img{
+		height: 50px;
+	}
+
+	.side-bar ul{
+		width: 100%;
+		float: left;
+		position: relative;
+		list-style: none;
+		padding: 10px;
+		box-sizing: border-box;
+	}
+	.side-bar li{
+		width: 100%;
+		float: left;
+		position: relative;
+		height: 30px;
+		margin-top: 10px;
+		line-height: 30px;
+	}
+
+	.side-bar a{
+		width: 100%;
+		height: 100%;
+		text-decoration: none;
+		display: flex;
+		justify-content: left;
+		align-content: center;
+		align-items: center;
+		font-size: .98em;
+		font-weight: 400;
+		cursor: pointer;
+		color: var(--letrasside);
+	}
+	.side-bar li img{
+		height: 15px;
+		line-height: 30px;	
+		margin-left: 10px;
+		margin-right: 20px;	
+	}
+	.logout{
+		position: absolute !important;
+		bottom: 0px;
+	}
+	.navbar-btn {
+	    box-shadow: none;
+	    outline: none !important;
+	    border: none;
+	}
+	.circle{
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background-color: var(--cancelar);
+		margin-left: 10px;
+		padding-left: 6px;
+		color: var(--blanco);
+		line-height: 20px;
+	}
+
+/*contenido general*/
+.content{
+	width: calc(100% - 250px);
+	left: 250px;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+.content.active{
+	width: 100%;
+	left: 0;
+	transition: all 0.3s;
+}
+	.content h1{
+		font-size: 1.8em;
+		font-weight: 400;
+		float: left;
+		position: relative;
+		color: var(--negro);
+		padding-left: 20px;
+	}
+
+/*show sidebar*/
+#sidebarCollapse {
+    width: 25px;
+    height: 25px;
+    background: #f5f5f5;
+    cursor: pointer !important;
+    float: left;
+    position: relative;
+}
+	#sidebarCollapse span {
+	    width: 80%;
+	    height: 2px;
+	    margin: 0 auto;
+	    display: block;
+	    background: var(--letrasside);
+	    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+	    transition-delay: 0.2s;
+	    cursor: pointer;
+	}
+
+	#sidebarCollapse span:first-of-type {
+	    transform: rotate(45deg) translate(2px, 2px);
+	}
+	#sidebarCollapse span:nth-of-type(2) {
+	    opacity: 0;
+	}
+	#sidebarCollapse span:last-of-type {
+	    transform: rotate(-45deg) translate(1px, -1px);
+	}
+
+	#sidebarCollapse.active span {
+	    transform: none;
+	    opacity: 1;
+	    margin: 5px auto;
+	}
+
+/*arriba link*/
+.arriba{
+	text-align: center;
+	margin-top: 20px;
+	position: relative;
+}
+	.arriba a{
+		color: var(--principal);
+		font-size: .9em;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+
+/*Estilos landing page*/
+.landing{
+	height: 100%;
+	float: left;
+	position: relative;
+	background-image:
+			      linear-gradient(90deg,
+			      rgba(0,0,0,.1),
+			      rgba(0,0,0,.8)
+			    ),
+			    url(../img/landing.jpg);
+	background-size: cover;
+	background-position: center;7
+	overflow-y: auto;
+}
+	.landing>h1{
+		color: var(--blanco);
+		font-weight: 300;
+		font-size: 4em;
+		float: left;
+		position: relative;
+	}
+
+	.landing>.sub{
+		height: 150px;
+		float: left;
+		position: relative;
+		padding-left: 0px !important;
+	}
+		.sub>h3{
+			color: var(--blanco);
+			font-weight: 300;
+			font-size: 4em;
+			float: left;
+			position: relative;
+			height: 100px;
+			line-height: 130px;
+			margin-top: 0px !important;
+		}
+		.sub>img{
+			height: 100%;	
+			float: left;
+			position: relative;
+
+		}
+	.landing>h2{
+		color: var(--blanco);
+		font-weight: 300;
+		font-size: 2em;
+		float: left;
+		position: relative;
+	}
+		.landing>.botones{
+			height: auto;
+			float: left;
+			position: relative;
+			justify-content: left !important;
+			margin-top: 20px;	
+		}
+			.botones>a{
+				height: 30px;
+				float: left;
+				position: relative;
+				border-radius: 5px;
+				padding: 2px;
+				box-sizing: border-box;
+				margin-right: 20px;
+				border: none;
+				background: var(--principal);
+				color: var(--blanco);
+				font-weight: 600;
+				text-align: center;
+				line-height: 30px;
+				cursor: pointer;
+				text-decoration: none;
+			}
+
+/*inicio de sesión*/
+.inicio{
+	justify-content: space-around !important;
+}
+.inicio a{
+	margin: 20px 0;
+	text-align: center;
+	color: var(--blanco);
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: 500;
+}
+.logo{
+	height: 130px;
+}
+.h3-inicio{
+ 	text-align: center;
+ 	color: var(--blanco);
+ 	font-size: 1.5em;
+ }
+
+.formulario-inicio{
+	background: rgba(255,255,255,.6);
+	border-radius: 5px;
+	padding: 10px;
+	box-sizing: border-box;
+}
+	.formulario-inicio>img{
+		border-radius: 50%;
+		height: 100px;
+		text-align: center;
+	}
+	.formulario-inicio>p{
+		text-align: center !important;
+		float: left;
+		position: relative;
+		margin-top: 10px;
+		color: var(--negro);
+	}
+	.icon{
+		height: 15px;
+	}
+	.formulario-inicio button{
+		background: var(--principal);
+		height: 30px;
+		float: left;
+		position: relative;
+		border: none;
+		margin-top: 20px;
+		color: var(--blanco);
+		font-weight: 600;
+		border-radius: 5px;
+	}
+	.formulario-inicio a{
+		font-size: .9em;
+		margin-top: 5px;
+		margin-bottom: 5px;
+		text-decoration: none;
+		cursor: pointer !important;
+		color: var(--negro) !important;
+	}
+		.formulario-inicio a:hover{
+			color: var(--enlaceregistro);
+			text-decoration: none;
+		}
+
+/*registro*/
+.registro{
+	justify-content: space-around !important;
+}
+.logo{
+	height: 130px;
+}
+.h3-registro{
+ 	text-align: center;
+ 	color: var(--blanco);
+ 	font-size: 1.5em;
+ }
+ .p-registro{
+ 	text-align: center;
+ 	color: var(--blanco);
+ 	font-weight: 300;
+ 	margin-top: 10px;
+ }
+ .opciones-registro{
+ 	float: left;
+ 	position: relative;
+ 	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+ }
+ 	.opcion{
+ 		float: left;
+ 		height: 100%;
+ 		position: relative;
+ 		background: var(--opcion);
+ 		padding: 20px;
+ 		box-sizing: border-box;
+ 		margin-left: 15px !important;
+ 		margin-right: 15px !important;
+ 		border-radius: 5px;
+ 	}
+ 	.opcion img{
+ 		height: 150px;
+ 		background: var(--blanco);
+ 		padding: 10px;
+ 		box-sizing: border-box;
+ 	}
+ 	.opcion h3{
+ 		text-align: center;
+ 		color: var(--negro);
+ 		font-size: 1.3em;
+ 	}
+ 	.opcion p{
+ 		text-align: center;
+	 	color: var(--negro);
+	 	font-weight: 300;
+ 	}
+ 	.opcion button{
+		background: var(--principal);
+		height: 30px;
+		float: left;
+		position: relative;
+		border: none;
+		margin-top: 20px;
+		color: var(--blanco);
+		font-weight: 600;
+		border-radius: 5px;
+	}
+	.enlace-registro{
+		font-size: .9em;
+		text-decoration: none;
+		color: var(--blanco);
+		cursor: pointer;
+		font-weight: 400;
+	}
+		.enlace-registro:hover{
+			text-decoration: none;
+			color: var(--blanco);
+		}
+/*opcion movil*/
+	.opcion-movil{
+		float: left;
+ 		position: relative;
+ 		background: var(--opcion);
+ 		padding: 10px;
+ 		box-sizing: border-box;
+ 		margin-left: 15px !important;
+ 		margin-right: 15px !important;
+ 		border-radius: 5px;
+ 		margin-top: 10px;
+	}
+		.opcion-movil h3{
+			font-size: 1.2em;
+		}
+		.opcion-movil button{
+			background: var(--principal);
+			height: 30px;
+			float: left;
+			position: relative;
+			border: none;
+			color: var(--blanco);
+			font-weight: 600;
+			border-radius: 5px;
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+
+/*registro como tutor y tutorado*/
+.formulario-registro{
+	background: var(--comentario);
+	border-radius: 5px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 30px;
+}
+	.formulario-registro div{
+		float: left;
+		position: relative;
+	}
+	.formulario-registro div span{
+		width: 20%;
+		float: left;
+		position: relative;
+		margin: 5px 0px;
+		line-height: 30px;
+		font-weight: 500;
+		text-align: right;
+		right: 5px;
+	}
+	.formulario-registro div input{
+		cursor: auto;
+	}
+	.formulario-registro div input, .formulario-registro div select{
+		width: 80%;
+		float: left;
+		position: relative;
+		margin: 5px 0px;
+	}
+	.formulario-registro div select{
+		cursor: pointer;
+	}
+		.formulario-registro div input:focus,.formulario-registro div select:focus{
+			border: none !important;
+		}
+		input[type=number]::-webkit-inner-spin-button, 
+		input[type=number]::-webkit-outer-spin-button { 
+		  -webkit-appearance: none; 
+		  margin: 0; 
+		}
+	.formulario-registro div input[type="file"]{
+		float: left;
+		position: relative;
+		border-radius: 5px;
+		color: var(--negro);
+		background-color: var(--comentario);
+		overflow: hidden;
+		border: 1px solid rgba(0,0,0,.02);
+		outline: none;
+	}
+		.formulario-registro div input[type=file]::-webkit-file-upload-button{
+			background-color: var(--principal);
+			color: var(--blanco);
+			height: 30px;
+			border: none;
+			outline: none;
+			cursor: pointer !important;
+		}
+	.formulario-registro button{
+		background: var(--principal);
+		height: 30px;
+		float: left;
+		position: relative;
+		border: none;
+		margin-top: 20px;
+		color: var(--blanco);
+		font-weight: 600;
+		border-radius: 5px;
+	}
+/*perfil de usuarios*/
+.informacion{
+	float: left;
+	position: relative;
+	height: auto;	
+	padding: 10px;
+	box-sizing: border-box;
+	padding-right: 0px !important;
+	padding-left: 0px !important;	
+}
+	.foto-perfil{
+		float: left;
+		position: relative;
+		height: auto;
+		margin-bottom: 10px;
+	}
+		.foto-perfil>img{
+			margin-bottom: 10px;
+			border-radius: 50%;
+		}
+		.foto-perfil a{
+			line-height: 20px;
+			font-size: .9em;
+			color: var(--letrasside);
+			text-decoration: none;
+			cursor: pointer;
+			text-align: center;
+		}
+		.foto-perfil a img{
+			height: 15px;
+			margin-right: 2px;
+			margin-top: -2px;
+		}
+
+
+	.datos{
+		float: left;
+		position: relative;
+		height: auto;
+		padding-bottom: 0px !important;
+		padding-top: 0px !important;
+		margin-bottom: 10px;	
+	}
+		.datos h2{
+			font-size: 1.5em;
+			margin-bottom: 0px !important;
+			margin-top: 0px !important;
+			color: var(--negro);
+		}
+		.datos p{
+			color: var(--negro);
+			margin-top: 5px;
+		}
+		.datos div{
+			height: auto;
+			margin-top: 10px;
+		}
+				.datos div p{
+					margin-top: 0px !important;
+					margin-bottom: 0px !important;
+					font-weight: 300;
+				}
+		.des{
+			text-align: justify;
+		}
+.cont-areas{
+	float: left;
+	position: relative;
+	height: auto;
+	padding: 10px;
+	box-sizing: border-box;
+}
+	.area{
+		float: left;
+		position: relative;
+		height: 100px;
+		border-radius: 5px;
+		padding: 3px;
+		box-sizing: border-box;
+		text-align: center;
+		margin-left: 6.5%;
+		margin-top: 20px;
+	}
+		.area a{
+			width: 100%;
+			float: right;
+			position: relative;
+		}	
+		.area a img{
+			float: right;
+			height: 12px;
+			cursor: pointer;
+		}
+		.area p{
+			width: 100%;
+			height: auto;
+			margin: auto;
+			font-weight: 600;
+			font-size: 1.2em;
+			color: #000;
+			text-shadow: 1px 1px 2px var(--blanco);
+		}
+	/*background de areas*/
+	.front_end{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(255,255,255,.2),
+			      rgba(255,255,255,.2)
+			    ),
+			    url(../img/front_end.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+	.prog{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(255,255,255,.2),
+			      rgba(255,255,255,.2)
+			    ),
+			    url(../img/prog.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+	.mat{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(255,255,255,.1),
+			      rgba(255,255,255,.1)
+			    ),
+			    url(../img/mat.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+	.dat{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(255,255,255,.1),
+			      rgba(255,255,255,.1)
+			    ),
+			    url(../img/dat.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+	.bd{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(255,255,255,.1),
+			      rgba(255,255,255,.1)
+			    ),
+			    url(../img/bd.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+	/*blanco-negro*/
+	.bd2{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(0,0,0,.3),
+			      rgba(0,0,0,.3)
+			    ),
+			    url(../img/bd.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+	.prog2{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(0,0,0,.3),
+			      rgba(0,0,0,.3)
+			    ),
+			    url(../img/prog.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+	.mat2{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(0,0,0,.3),
+			      rgba(0,0,0,.3)
+			    ),
+			    url(../img/mat.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+	.dat2{
+		background-image:
+			      linear-gradient(90deg,
+			      rgba(0,0,0,.3),
+			      rgba(0,0,0,.3)
+			    ),
+			    url(../img/dat.jpg);
+		background-position: center center;
+		background-size: cover;
+	}
+/*agregar area*/
+.add-area{
+	float: left;
+	position: relative;
+	padding: 10px;
+	box-sizing: border-box;
+	height: auto;
+	margin-top: 10px;
+}
+	.add-area p{
+		float: left;
+		position: relative;
+		font-size: 1em;
+		font-weight: 300;
+		margin-right: 5px;
+		margin-bottom: auto;
+		margin-top: auto;
+		text-align: center;
+		margin-top: 15px;
+	}
+	.add-area button{
+		height: auto;
+		float: right;
+		position: relative;
+		border-radius: 5px;
+		padding: 2px;
+		box-sizing: border-box;
+		border: none;
+		background: var(--principal);
+		color: var(--blanco);
+		font-weight: 600;
+		text-align: center;
+		line-height: 30px;
+		margin-top: 10px;
+		cursor: pointer;
+		text-decoration: none;
+	}
+/*comentarios para tutor*/
+.comentarios{
+	float: left;
+	position: relative;
+	background-color: var(--comentario);
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	margin-left: 4%;
+	margin-top: 10px;
+}
+		.comentarios .nombre{
+			font-size: 1em;
+			font-weight: 500;
+			margin-bottom: 0px !important;
+			color: var(--negro);
+		}
+		.comentarios .tipo{
+			font-size: .9em;
+			font-weight: 300;
+			margin-top: 0px !important;
+			margin-bottom: 5px !important;
+			color: var(--negro);
+		}
+		.comentarios .mensaje{
+			text-align: justify;
+			color: var(--negro);
+		}
+/*tutores del tutorado*/
+.tutores{
+	float: left;
+	position: relative;
+	padding: 10px;
+	box-sizing: border-box;
+	height: auto;
+}
+	.tutor{
+		float: left;
+		position: relative;
+		height: 100px;
+		border-radius: 5px;
+		text-align: center;
+		margin-left: 6%;
+		margin-top: 10px;
+		padding: 5px;
+		box-sizing: border-box;
+	}
+	.media{
+		height: 50%;
+		width: 70%;
+		float: left;
+		position: relative;
+		padding: 2px;
+		box-sizing: border-box;
+		margin-top: 0px !important;
+	}
+		.media p{
+			text-align: left;	
+			font-size: 1.2em;
+			font-weight: 400;
+			color: var(--blanco);
+			text-shadow: 2px 1px 2px var(--negro);
+		}
+		.t-curso{
+			font-weight: 300 !important;
+			font-size: 1.1em !important;
+		}
+	.tutor img{
+		position: absolute;
+		z-index: 9999;
+		right: 8px;
+		height: 60px;
+		margin-top: -30px;
+		top: 50%;
+	}
+.datos-basicos{
+	float: left;
+	position: relative;
+	height: auto;
+	padding: 10px;
+	box-sizing: border-box;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+}
+	.datos-basicos>div{
+		width: 100%;
+		height: auto;
+		float: left;
+		position: relative;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
+	.datos-basicos>div b{
+		width: 15%;
+		color: var(--negro);
+		height: 30px;
+		float: left;
+		position: relative;
+		line-height: 30px;
+		margin-right: 10px;
+	}
+	.datos-basicos>div span{
+		height: 30px;
+		float: left;
+		position: relative;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
+	.datos-basicos>div .dato{
+		width: 100%;
+		height: 30px;
+		padding: 10px;
+		box-sizing: border-box;
+		background: var(--comentario);
+		border: none;
+		border-radius: 5px;
+		color: var(--negro);
+		outline: none;
+		cursor: auto;
+		float: left;
+		position: relative;
+	}
+	.datos-basicos>div select{
+		padding: 5px !important;
+		box-sizing: border-box;
+	}
+	.datos-basicos>div input[type="file"]{
+		/*padding: 5px !important;*/
+		box-sizing: border-box;
+		float: left;
+		position: relative;
+		width: 100%;
+		border-radius: 5px;
+		color: var(--negro);
+		background-color: var(--comentario);
+		overflow: hidden;
+	}
+		.datos-basicos>div input[type=file]::-webkit-file-upload-button{
+			background-color: var(--principal);
+			color: var(--blanco);
+			height: 30px;
+			border: none;
+			outline: none;
+			cursor: pointer !important;
+		}
+	.datos-basicos>div textarea{
+		height: 100px !important;
+		padding: 10px !important;
+		box-sizing: border-box;
+		resize: none;
+		width: 100%;
+		background: var(--comentario);
+		border: none;
+		border-radius: 5px;
+		color: var(--negro);
+		outline: none;
+		cursor: auto;
+		float: left;
+		position: relative;
+		margin-bottom: 30px;
+	}
+	.botones{
+		float: left;
+		position: relative;
+	}
+		.botones input{
+			height: auto;
+			position: relative;
+			border-radius: 5px;
+			padding: 2px;
+			box-sizing: border-box;
+			border: none;
+			color: var(--blanco);
+			font-weight: 600;
+			text-align: center;
+			line-height: 30px;
+			cursor: pointer;
+			text-decoration: none;
+			margin-left: 10px;
+		}
+		.guardar{
+			background: var(--principal);
+		}
+		.finalizar{
+			background: var(--iniciar);
+		}
+		.cancelar{
+			background: var(--cancelar);
+		}
+	.cuenta{
+		text-align: left;
+		margin-top: 30px;
+		padding-right: 0px !important;
+		padding-left: 0px !important;
+	}
+		.cuenta a{
+			color: var(--negro);
+			font-size: .9em;
+			font-weight: 400;
+			text-decoration: none;
+			cursor: pointer;
+		}
+/*tutorias*/
+.tutorias, .tutores{
+	float: left;
+	position: relative;
+	height: auto;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 10px;
+}
+	.tutoria{
+		width: 20%;
+		margin-left: 10%;
+		height: 180px;
+		float: left;
+		position: relative;
+		border-radius: 5px;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+		overflow: hidden;
+		margin-top: 10px;
+	}
+		.tutoria>.media-dos{
+			width: 100%;
+			height: 50%;
+			background-color: var(--principal) !important;
+			padding: 15px;
+			box-sizing: border-box;
+		}
+			.media-dos p{
+				width: 70%;
+				color: var(--blanco);
+				text-shadow: 1px 1px 0px var(--negro);
+				margin-top: 0px !important;
+				margin-bottom: 0px !important;
+				font-weight: 400;
+			}
+			.media-dos>.a{
+				font-weight: 500 !important;
+			}
+		.tutoria>.media-tres{
+			width: 100%;
+			height: 50%;
+			background-color: var(--blanco) !important;
+			padding: 15px;
+			box-sizing: border-box;
+			border: 1px solid rgba(0,0,0,.07);
+			align-items: flex-start !important;
+		}
+			.media-tres p{
+				color: var(--negro);
+				margin-top: 0px !important;
+				margin-bottom: 0px !important;
+				font-weight: 400;
+				font-size: .9em;
+			}
+			.media-tres a{
+				font-size: .9em;
+				color: var(--principal);
+				font-weight: 500;
+				cursor: pointer;
+				margin-top: 3px;
+				text-decoration: none;
+			}
+		.tutoria img{
+			position: absolute;
+			float: right;
+			height: 50px;
+			margin-top: -35px;
+			right: 10px;
+		}
+/*horarios del tutor*/
+.horarios{
+	float: left;
+	position: relative;
+	height: auto;
+	padding: 10px;
+	box-sizing: border-box;
+}
+	.horario{
+		height: auto;
+		float: left;
+		position: relative;
+		border: 1px solid var(--bordes);
+		border-radius: 5px;
+		padding: 8px;
+		box-sizing: border-box;
+		margin-left: 6.5%;
+		margin-top: 10px;
+	}
+		.horario img{
+			height: 10px;
+			float: right;
+			cursor: pointer;
+		}
+		.horario h3{
+			font-size: 1.1em;
+			color: var(--negro);
+			margin-top: 10px !important;
+			margin-bottom: 10px !important;
+			margin-left: 8px;
+		}
+		.horario p{
+			font-size: 1em;
+			color: var(--negro);
+			margin-top: 10px !important;
+			margin-bottom: 10px !important;
+			margin-left: 8px;
+		}
+/*.ofertar horarios*/
+.ofertar{
+	float: left;
+	position: relative;
+	padding: 10px;
+	box-sizing: border-box;
+	height: auto;
+}
+	.noborder{
+		border-bottom: none !important;
+	}
+	.fecha{
+		height: auto;
+		width: 100%;
+	}
+	.fecha div{
+		width: 33%;
+		float: left;
+		position: relative;
+	}
+	.fecha div b{
+		width: 30%;
+	}
+	.fecha div span input{
+		cursor: pointer !important;
+		padding: 5px !important;
+	}
+	.fecha div span select{
+		cursor: pointer !important;
+		padding: 2px !important;
+	}
+/*sesión de tutoría indivudal "opciones"*/
+.back{
+	font-size: .9em;
+	text-decoration: none !important;
+	color: var(--negro);
+	cursor: pointer;
+}
+
+	.opciones>input{
+		height: 30px;
+		float: left;
+		position: relative;
+		border-radius: 5px;
+		padding: 2px;
+		box-sizing: border-box;
+		margin-right: 20px;
+		margin-top: 10px;
+		border: none;
+		color: var(--blanco);
+		font-weight: 600;
+		text-align: center;
+		line-height: 30px;
+		cursor: pointer;
+		text-decoration: none;
+	}
+	.evaluacion{
+		float: left;
+		position: relative;
+		height: auto !important;
+		padding: 10px;
+		box-sizing: border-box;
+	}
+/*preguntas frecuentes qa*/
+.qa{
+	float: left;
+	position: relative;
+	height: auto;
+	padding: 10px;
+	box-sizing: border-box;
+}
+	.qa h2{
+		font-size: 1.7em;
+		color: var(--negro);
+		height: auto;
+	}
+	.qa h3{
+		font-size: 1.1em;
+		color: var(--negro);
+		height: auto;
+	}
+	.qa p{
+		padding: 5px 20px;
+		box-sizing: border-box;
+		height: auto;
+		border-bottom: 1px solid rgba(0,0,0,.04);
+	}
+	.qa img{
+		height: 50px;
+		float: left;
+		position: relative;
+	}
+/*historial mes*/
+.historial{
+	float: left;
+	position: relative;
+	height: auto;
+	padding: 10px;
+	box-sizing: border-box;
+}
+	.historial input[type=submit]{
+		height: 30px;
+		float: left;
+		position: relative;
+		border-radius: 5px;
+		font-weight: 600;
+		text-align: center;
+		line-height: 30px;
+		cursor: pointer;
+		border: none;
+		text-decoration: none;
+		margin: 5px 2px;
+	}
+	.menu{
+		text-align: center;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
+	.mes{
+		background: var(--blanco);
+		color: var(--iniciar);
+		border: 2px solid var(--iniciar) !important;
+	}
+	.semana{
+		background: var(--iniciar);
+		color: var(--blanco);
+	}
+	.historial div{
+		float: left;
+		position: relative;
+		margin-top: 10px;
+	}
+	.historial div p{
+		font-weight: 500;
+		float: left;
+		position: relative;
+		border:none;
+		border-radius: 5px;
+		margin-top: 10px;
+		margin-right: 10px;
+	}
+			.historial .div-s{
+				padding-left: 0px !important;
+				padding-right: 0px !important;
+			}
+			.historial div select{
+				height: 30px;
+				float: left;
+				position: relative;
+				background: var(--comentario);
+				border:none;
+				border-radius: 5px;
+				cursor: pointer;
+				outline: none;
+			}
+			.historial div .sem{
+				height: 30px;
+				float: left;
+				position: relative;
+				background: var(--comentario);
+				border:none;
+				border-radius: 5px;
+				cursor: default;
+				outline: none;
+				color: var(--negro);
+				font-weight: 300;
+			}
+	.resultados{
+		background: var(--comentario);
+		height: auto;
+		float: left;
+		position: relative;
+		border-radius: 5px;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
+		.resultados h3{
+			color: var(--negro);
+			text-align: center;
+			font-size: 1.2em;
+			font-weight: 300;
+		}
+		.resultados p{
+			text-align: center !important;
+			color: var(--negro) !important;
+			font-size: 1em !important;
+		}
+		.no-datos{
+			display: none;
+		}
+	.horas{
+		background: var(--comentario);
+		height: auto;
+		float: left;
+		position: relative;
+		border-radius: 5px;
+		padding: 10px;
+		box-sizing: border-box;
+	}
+			.horas h3{
+				color: var(--negro);
+				text-align: center;
+				font-size: 1.2em;
+				font-weight: 300;
+			}
+			.horas input{
+				height: 30px;
+				float: left;
+				position: relative;
+				border-radius: 5px;
+				font-weight: 600;
+				text-align: center;
+				line-height: 30px;
+				cursor: pointer;
+				border: none;
+				text-decoration: none;
+				margin-bottom: 10px;
+				margin-top: 10px;
+			}
+	table{
+		text-align: center;
+		color: var(--negro);
+	}
+		table tr{
+			margin-top: 5px;
+		}
+		table th{
+			text-align: center;
+		}
+/*buscador de mis tutorias (tutorado)*/
+.search{
+	float: left;
+	position: relative;
+	height: auto;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+	.buscador{
+		float: left;
+		position: relative;
+		height: 30px;
+		border-radius: 5px;
+		overflow: hidden;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
+	.buscador input[type=search]{
+		border: 1px solid rgba(0,0,0,.09);
+		height: 100%;
+		border-radius: 5px 0px 0px 5px;
+		cursor: auto;
+		outline: none;
+		color: var(--negro);
+	}
+	.buscador input[type=submit]{
+		border: none;
+		background: var(--principal);
+		border-radius: 0px 5px 5px 0px;
+		height: 100%;
+		color: var(--blanco);
+		font-weight: 400;
+	}
+.busqueda{
+	float: left;
+	position: relative;
+	padding: 10px;
+	box-sizing: border-box;
+	height: auto;
+}
+	.busqueda details summary{
+		outline: none;
+		cursor: pointer;
+		font-size: 1.1em;
+		color: var(--negro):;
+	}
+	.busqueda details summary input{
+		height: 20px !important;
+	}
+/*admin*/
+/*tutores*/
+.admin-tutores{
+	float: left;
+	position: relative;
+	height: auto;
+	padding: 10px;
+	box-sizing: border-box;
+}
+	.admin-tutor{
+		height: auto;
+		float: left;
+		position: relative;
+		padding: 5px;
+		box-sizing: border-box;
+		justify-content: space-around !important;
+		background: var(--comentario);
+		border-radius: 5px;
+		margin: 5px 0px;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+		text-align: center;
+	}
+	.admin-tutor p{
+		margin-top: 0px !important;
+		margin-bottom: 0px !important;
+		margin-left: 10px;
+		color: var(--negro);
+	}
+	.ago{
+		float: left;
+		position: relative;
+		font-size: 1em;
+		color: var(--negro);
+		font-weight: 300 !important;
+	}
+	.admin-tutor a{
+		font-weight: 500;
+		cursor: pointer;
+		text-decoration: none;
+		color: var(--negro);
+		float: left;
+		position: relative;
+		margin-top: 0px !important;
+		margin-bottom: 0px !important;
+		margin-left: 10px;
+	}
+		.admin-tutor a:hover{
+			color: var(--principal);
+		}
+
+
+
+
+
+
+
+
+/*query móviles*/
+
+@media only screen and (max-width: 200px) {
+	.landing>h1{
+		font-size: 3.5em;
+		text-align: center;
+	}
+	.sub{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+	.landing>h2{
+		font-size: 1.2em;
+		text-align: center;
+	}
+
+	/*inicio*/
+	.logo{
+		height: 100px;
+	}
+	.formulario-inicio{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+		.formulario-inicio>img{
+			height: 0px;
+		}
+	/*registro*/
+	.opciones-registro{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+	/*areas y tutor*/
+	.area{
+		margin-left: 4% !important;
+	}
+		.datos-basicos input{
+			padding: 5px;
+			box-sizing: border-box;
+		}
+		.datos-basicos>div b{
+			width: 100%;
+		}
+	.tutor{
+		margin-left: 0% !important;
+	}	
+	/*tutorias*/
+	.tutoria>{
+		margin-left: 0% !important;
+	}	
+		.tutoria img{
+			position: absolute;
+			float: right;
+			height: 60px;
+			margin-top: -35px;
+			right: 10px;
+		}
+	/*horario*/
+	.horario{
+		margin-left: 0% !important;
+	}
+}
+
+@media only screen and (max-width: 356px) {
+	.landing>h1{
+		font-size: 3.5em;
+		text-align: center;
+	}
+	.sub{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+	.landing>h2{
+		font-size: 1.2em;
+		text-align: center;
+	}
+
+	/*inicio*/
+	.logo{
+		height: 100px;
+	}
+	.formulario-inicio{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+		.formulario-inicio>img{
+			height: 80px;
+		}
+	/*registro*/
+	.opciones-registro{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+	/*areas y tutor*/
+	.area{
+		margin-left: 4% !important;
+	}
+		.datos-basicos input{
+			padding: 5px;
+			box-sizing: border-box;
+		}
+		.datos-basicos>div b{
+			width: 100%;
+		}
+	.tutor{
+		margin-left: 0% !important;
+	}
+	/*molde*/
+	.molde{
+		width: 80%;
+		height: auto;
+		float: left;
+		position: fixed;
+		z-index: 999999;
+		background: var(--blanco);
+		padding: 10px;
+		box-sizing: border-box;
+		border-radius: 5px;
+		/*display: none;*/
+		top: 50%;
+		margin-top: -150px;
+		left: 50%;
+		margin-left: -40%;
+	}
+		.molde .check{
+			height: 80px;
+			margin-left: calc(50% - 40px);
+			margin-bottom: 10px;
+		}
+	/*tutorias*/
+	.tutoria>{
+		margin-left: 0% !important;
+	}
+		.tutoria img{
+			position: absolute;
+			float: right;
+			height: 60px;
+			margin-top: -35px;
+			right: 10px;
+		}
+	/*horario*/
+	.horario{
+		margin-left: 0% !important;
+	}
+
+
+}
+
+@media (max-width: 768px) {
+	.wrapper.active{
+		position: fixed;
+		top: 0;
+		left: 0;
+	}
+    #sidebar {
+        margin-left: -250px;
+        transition: all .6s;	
+    }
+    #sidebar.active {
+        margin-left: 0;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+    }
+    	.logout{
+    		bottom: 20px;
+    	}
+    .content {
+        width: 100%;
+        left: 0px !important;
+        transition: all .6s;
+    }
+    .content.active {
+        left: 250px !important;
+        transition: all .6s;
+    }
+    #sidebarCollapse span:first-of-type,
+    #sidebarCollapse span:nth-of-type(2),
+    #sidebarCollapse span:last-of-type {
+        transform: none;
+        opacity: 1;
+        margin: 5px auto;
+    }
+    #sidebarCollapse.active span {
+        margin: 0 auto;
+    }
+    #sidebarCollapse.active span:first-of-type {
+        transform: rotate(45deg) translate(2px, 2px);
+    }
+    #sidebarCollapse.active span:nth-of-type(2) {
+        opacity: 0;
+    }
+    #sidebarCollapse.active span:last-of-type {
+        transform: rotate(-45deg) translate(1px, -1px);
+    }
+
+    .tutor{
+    	margin-left: 0% !important
+    }
+    .horario{
+    	margin-left: 0% !important;
+    }
+}
+
+
+@media only screen and (max-width: 800px) {
+	#no-more-tables table, 
+	#no-more-tables thead, 
+	#no-more-tables tbody, 
+	#no-more-tables th, 
+	#no-more-tables td, 
+	#no-more-tables tr { 
+		display: block; 
+		height: auto;
+	}
+ 
+	#no-more-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#no-more-tables td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+		padding-bottom: 20px;
+	}
+
+	#no-more-tables tr { 
+		border-bottom: 1px solid var(--letrasside);
+		padding-bottom: 10px;
+		box-sizing: border-box;
+	}
+ 
+	#no-more-tables td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+	#no-more-tables td:before {
+		content: attr(data-title);
+	}
+
+}
+
+
+@media only screen and (max-aspect-ratio: 13/9) and (max-width: 998px) {
+	.landing>h1{
+		font-size: 3.5em;
+		text-align: center;
+	}
+	.sub{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+	.landing>h2{
+		font-size: 1.2em;
+		text-align: center;
+	}
+
+	/*inicio*/
+	.logo{
+		height: 100px;
+	}
+	.formulario-inicio{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+		.formulario-inicio>img{
+			height: 80px;
+		}
+	/*registro*/
+	.formulario-registro div span{
+		width: 100% !important;
+		/*background-color: red;*/
+		text-align: left;
+	}
+	.formulario-registro div input, .formulario-registro div select{
+		width: 100%;
+	}
+	.opciones-registro{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+	/*areas y tutor*/
+	.area{
+		margin-left: 5.5% !important;
+	}
+		.datos-basicos input{
+			padding: 5px;
+			box-sizing: border-box;
+		}
+		.datos-basicos>div b{
+			width: 100%;
+		}
+
+	/*molde*/
+	.molde{
+		width: 80%;
+		height: auto;
+		float: left;
+		position: fixed;
+		z-index: 999999;
+		background: var(--blanco);
+		padding: 10px;
+		box-sizing: border-box;
+		border-radius: 5px;
+		/*display: none;*/
+		top: 50%;
+		margin-top: -150px;
+		left: 50%;
+		margin-left: -40%;
+	}
+		.molde .check{
+			height: 80px;
+			margin-left: calc(50% - 40px);
+			margin-bottom: 10px;
+		}
+	/*tutorias*/
+	.tutoria{
+		width: 100%;
+		margin-left: 0% !important;
+	}
+		.tutoria img{
+			position: absolute;
+			float: right;
+			height: 60px;
+			margin-top: -35px;
+			right: 10px;
+		}
+}
+
+

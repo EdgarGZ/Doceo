@@ -1,0 +1,105 @@
+{% extends 'base/index1.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="bg"></div>
+	<!-- contenido -->
+
+	<div class="wrapper" id="wrapper">
+		<!-- side bar -->
+		<div class="side-bar" id="sidebar">
+			<div class="logo-bar flex">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+
+			<ul class="flex-column">
+				<li><a href="{% url '' %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/tutores.png' %}">Tutores</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/historial.png' %}">Historial</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
+			</ul>
+
+			<ul class="flex-column logout">
+				<li><a href="{% url '' %}"><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+			</ul>
+		</div>
+
+		<div class="content col-xs-12" id="content">
+			<div class="top col-xs-12 col-md-12">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
+	                <span></span>
+	                <span></span>
+	                <span></span>
+	            </button>
+	            <h1 id="top" class="hidden-xs">Historial de tutorías</h1>
+	            <h1 id="top" class="hidden-sm hidden-md hidden-lg">Historial de<br> tutorías</h1>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 historial">
+	        	<div class="col-xs-12 col-md-12 flex">	
+	        		<p class="">Tutor: </p>
+	        		<select class="col-xs-12 col-md-5">
+	        			<option></option>
+	        		</select>
+	        	</div>
+	        	
+	        	<div class="col-xs-12 flex">
+	        		<input type="submit" value="Mes" class="col-xs-6 col-sm-2 col-md-2 semana">
+	        		<input type="submit" value="Semana" class="col-xs-6 col-sm-2 col-md-2 mes">
+	        	</div>	        	
+
+	        	<div class="col-xs-12 col-md-12 flex">	
+	        		<input type="text" class="col-xs-12 col-sm-10 col-md-5 sem" value="X a X de Mes, Año" readonly>
+	        	</div>
+
+	        	<div class="col-xs-12 col-md-12 resultados flex-column">
+	        		<!-- cuando no haya datos para poder mostrar -->
+	        		<p class="no-datos">No hay información que mostrar por el momento</p>
+	        		<!-- fin de no mostrar datos -->
+	        		<h3><b>Total de tutorías: </b>Número</h3>
+	        		<div id="no-more-tables" class="col-xs-12 col-md-12">
+		        		<table class="table">
+						    <thead>
+						      <tr>
+						        <th>Nombre tutorado</th>
+						        <th>Fecha</th>
+						        <th>Estatus</th>
+						        <th>Calificación</th>
+						        <th>Evidencia</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+						      <tr>
+						        <td data-title="Nombre"></td>
+						        <td data-title="Fecha"></td>
+						        <td data-title="Estatus"></td>
+						        <td data-title="Calificación"></td>
+						        <td data-title="Evidencia"></td>
+						      </tr>
+						    </tbody>
+						</table>
+					</div>
+	        	</div>
+
+	        	<div class="col-xs-12 col-md-12 horas flex-column">
+	        		<input type="submit" name="" value="Descargar comprobante" class="semana col-md-2">
+	        	</div>
+	        </div>
+			
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+            	$('#wrapper').toggleClass('active');
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+{% endblock content %}

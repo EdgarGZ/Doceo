@@ -1,0 +1,883 @@
+:root{
+	--principal: #5CD2BF;
+	--blanco: #F7F7F7;
+	--negro: #646464;
+	--enlaceregistro: #6C7A9D;
+	--opcion: #E5E5E5;
+	--letrasside: #897E7E;
+	--titulo: #4B4B4B;
+	--comentario: #F0EFEF;
+	--cancelar: #F50413;
+	--bordes: #F0EFEF;
+	--iniciar: #5174CE;
+}
+
+*{
+	padding: 0px;
+	margin: 0px;
+	font-family: 'Roboto', sans-serif;
+	cursor: default;
+}
+
+html, body{
+	height: 100%;
+	width: 100%;
+}
+
+/*estilos globales y reutilizables*/
+.altura{
+	height: 100%;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+
+.flex{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+.flex-column{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+input{
+	cursor: auto;
+}
+input:focus, select:focus{
+	border: none !important;
+}
+
+.vacio{
+	height: 20%;
+}
+.vacio2{
+	height: 10%;
+}
+
+.bg{
+	width: 100% !important;
+	height: 100%;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	z-index: 99999;
+	background: rgba(0,0,0,.6);
+	display: none;
+}
+	.ver-bg{
+		display: block !important;
+		transition: all .6s;
+	}
+
+/*pagina de error*/
+.error{
+	height: 100%;
+	float: left;
+	position: relative;
+	/*background-image:
+			      linear-gradient(90deg,
+			      rgba(255,255,255,.7),
+			      rgba(255,255,255,.7)
+			    ),
+			    url(../img/logo.png);*/
+	background: linear-gradient(179deg, rgba(130,209,199,1) 0%, rgba(130,209,199,1) 2%, rgba(197,235,232,1) 44%, rgba(215,237,240,1) 58%, rgba(248,242,255,1) 83%);
+	background-repeat: no-repeat;
+	background-position: bottom right;
+	padding: 10px;
+	box-sizing: border-box;
+	justify-content: space-around !important;
+}
+	.error .logo{
+		height: 50px !important;
+	}
+	.error .mensaje{
+		height: auto;
+		float: left;
+		position: relative;
+	}
+	.mensaje h2{
+		font-weight: 600;
+		font-size: 3em;
+		color: #FE4747;
+	}
+	.mensaje h3{
+		font-weight: 200;
+		font-size: 2.5em;
+	}
+	.mensaje p{
+		font-weight: 200;
+		font-size: 2em;
+	}
+	.mensaje a{
+		font-weight: 200;
+		font-size: .6em;
+		color: var(--enlaceregistro);
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+/*Estilos landing page*/
+.landing{
+	height: 100vh;
+	float: left;
+	position: relative;
+	background-image:
+			      linear-gradient(90deg,
+			      rgba(0,0,0,.1),
+			      rgba(0,0,0,.8)
+			    ),
+			    url(../img/landing.jpg);
+	background-size: cover;
+	background-position: center;
+	overflow-y: auto;
+}
+	.landing>h1{
+		color: var(--blanco);
+		font-weight: 300;
+		font-size: 4em;
+		float: left;
+		position: relative;
+	}
+
+	.landing>.sub{
+		height: 150px;
+		float: left;
+		position: relative;
+		padding-left: 0px !important;
+	}
+		.sub>h3{
+			color: var(--blanco);
+			font-weight: 300;
+			font-size: 4em;
+			float: left;
+			position: relative;
+			height: 100px;
+			line-height: 130px;
+			margin-top: 0px !important;
+		}
+		.sub>img{
+			height: 100%;	
+			float: left;
+			position: relative;
+
+		}
+	.landing>h2{
+		color: var(--blanco);
+		font-weight: 300;
+		font-size: 2em;
+		float: left;
+		position: relative;
+	}
+		.landing>.botones{
+			height: auto;
+			float: left;
+			position: relative;
+			justify-content: left !important;
+			margin-top: 20px;	
+		}
+			.botones>a{
+				height: 30px;
+				float: left;
+				position: relative;
+				border-radius: 5px;
+				padding: 2px;
+				box-sizing: border-box;
+				margin-right: 20px;
+				border: none;
+				background: var(--principal);
+				color: var(--blanco);
+				font-weight: 600;
+				text-align: center;
+				line-height: 30px;
+				cursor: pointer;
+				text-decoration: none;
+			}
+
+/*inicio de sesión*/
+.inicio{
+	justify-content: space-around !important;
+}
+.inicio a, .registro a{
+	text-align: center !important;
+	color: var(--blanco);
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: 200;
+	margin: 20px 0px;
+	float: left;
+	position: relative;
+	width: 100%;
+}
+.logo{
+	height: 130px;
+}
+.h3-inicio{
+ 	text-align: center;
+ 	color: var(--blanco);
+ 	font-size: 1.5em;
+}
+
+.p-inicio{
+	text-align: center;
+ 	color: var(--blanco);
+ 	font-size: 1em;
+}
+
+.formulario-inicio{
+	background: rgba(255,255,255,.6);
+	border-radius: 5px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 30px;
+}
+	.formulario-inicio>img{
+		border-radius: 50%;
+		height: 100px;
+		text-align: center;
+	}
+	.formulario-inicio>p{
+		text-align: center !important;
+		float: left;
+		position: relative;
+		font-weight: 600;
+		margin-top: 10px;
+		color: var(--negro);
+	}
+	.icon{
+		height: 15px;
+	}
+	.formulario-inicio button{
+		background: var(--principal);
+		height: 30px;
+		float: left;
+		position: relative;
+		border: none;
+		margin-top: 20px;
+		color: var(--blanco);
+		font-weight: 600;
+		border-radius: 5px;
+	}
+	.formulario-inicio a{
+		font-size: .9em;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		text-decoration: none;
+		cursor: pointer !important;
+		color: var(--negro);
+	}
+		.formulario-inicio a:hover{
+			color: var(--enlaceregistro);
+			text-decoration: none;
+		}
+/*registro como tutor y tutorado*/
+.formulario-registro{
+	width: 70%;
+	background: var(--comentario);
+	border-radius: 5px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 30px;
+	left: 50%;
+	margin-left: -35%;
+}
+	.formulario-registro div{
+		float: left;
+		position: relative;
+	}
+	.formulario-registro div span{
+		width: 20%;
+		float: left;
+		position: relative;
+		margin: 5px 0px;
+		line-height: 30px;
+		font-weight: 700;
+		text-align: left;
+		right: 5px;
+		color: var(--negro);
+	}
+	.formulario-registro .indc{
+		float: left;
+		position: relative;
+		font-size: .9em !important;
+		width: 100% !important;
+		margin: 0px 0px !important;
+		font-weight: 100 !important;
+		color: var(--letrasside);
+		text-align: right !important;
+	}
+	.formulario-registro div input{
+		cursor: auto;
+	}
+	.formulario-registro div input, .formulario-registro div select{
+		width: 80%;
+		float: left;
+		position: relative;
+		margin: 5px 0px;
+	}
+	.formulario-registro div select{
+		cursor: pointer;
+	}
+		.formulario-registro div input:focus,.formulario-registro div select:focus{
+			border: none !important;
+		}
+		input[type=number]::-webkit-inner-spin-button, 
+		input[type=number]::-webkit-outer-spin-button { 
+		  -webkit-appearance: none; 
+		  margin: 0; 
+		}
+	.formulario-registro div input[type="file"]{
+		float: left;
+		position: relative;
+		border-radius: 5px;
+		color: var(--negro);
+		background-color: var(--comentario);
+		overflow: hidden;
+		outline: none;
+	}
+		.formulario-registro div input[type=file]::-webkit-file-upload-button{
+			background-color: var(--principal);
+			color: var(--blanco);
+			height: 30px;
+			border: none;
+			outline: none;
+			cursor: pointer !important;
+		}
+	.formulario-registro button{
+		background: var(--principal);
+		height: 30px;
+		float: left;
+		position: relative;
+		border: none;
+		margin-top: 20px;
+		color: var(--blanco);
+		font-weight: 600;
+		border-radius: 5px;
+	}
+/*molde para alerts*/
+.molde{
+	width: 40%;
+	height: auto;
+	float: left;
+	position: fixed;
+	z-index: 99999;
+	background: var(--blanco);
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	display: none;
+	top: 50%;
+	margin-top: -150px;
+	left: 50%;
+	margin-left: -20%;
+}
+	.ver-molde{
+		display: block !important;
+		transition: all .6s;
+	}
+	.molde .clo{
+		height: 20px;
+		float: right !important;
+		margin-top: -20px;
+		margin-right: -20px;
+		cursor: pointer;
+	}
+	.molde h2{
+		text-align: center;
+		font-size: 1.5em;
+		font-weight: 600;
+		color: var(--negro);
+	}
+	.molde p{
+		text-align: center;
+		font-size: 1em;
+		font-weight: 300;
+		color: var(--negro);
+	}
+	.molde .b{
+		text-align: center;
+		font-size: 1em;
+		font-weight: 500;
+		color: var(--negro);
+	}
+	.molde a{
+		color: var(--principal);
+		cursor: pointer;
+		text-decoration: none;
+	}
+	.molde select{
+		width: 50%;
+		margin-left: calc(50% - 25%);
+		float: left;
+		position: relative;
+		height: 30px;
+		background: var(--comentario);
+		border-radius: 5px;
+		border: none;
+		cursor: pointer;
+		outline: none;
+	}
+	.molde>input{
+		width: 20%;
+		height: auto;
+		border-radius: 5px;
+		padding: 2px;
+		box-sizing: border-box;
+		border: none;
+		color: var(--blanco);
+		font-weight: 600;
+		text-align: center;
+		line-height: 30px;
+		cursor: pointer;
+		text-decoration: none;
+		margin-top: 20px;
+		margin-left: calc(50% - 8%);
+		background-color: var(--principal);
+	}
+	.molde .text{
+		width: 80%;
+		height: auto;
+		border-radius: 5px;
+		padding: 2px;
+		box-sizing: border-box;
+		border: none;
+		color: var(--negro);
+		font-weight: 300;
+		text-align: center;
+		line-height: 30px;
+		cursor: auto;
+		outline: none;
+		text-decoration: none;
+		margin-top: 10px;
+		background-color: white;
+		margin-left: calc(50% - 40%) !important;
+	}
+	.botonera{
+		width: 100%;
+		float: left;
+		position: relative;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		justify-content: space-between !important;
+	}
+		.botonera input{
+			width: 30%;
+			height: auto;
+			border-radius: 5px;
+			padding: 2px;
+			box-sizing: border-box;
+			border: none;
+			color: var(--blanco);
+			font-weight: 600;
+			text-align: center;
+			line-height: 30px;
+			cursor: pointer;
+			text-decoration: none;
+			margin-top: 5px;
+			margin-left: 10px;
+			float: left;
+			position: relative;
+		}
+	.molde .check{
+		height: 80px;
+		margin-left: calc(50% - 40px);
+		margin-bottom: 10px;
+	}
+	.molde .link{
+		z-index: 999999 !important;
+	}
+	.molde>textarea{
+		width: 100%;
+		height: 80px !important;
+		padding: 10px !important;
+		box-sizing: border-box;
+		resize: none;
+		background: var(--comentario);
+		border: none;
+		border-radius: 5px;
+		color: var(--negro);
+		outline: none;
+		cursor: auto;
+		float: left;
+		position: relative;
+		/*margin-bottom: 30px;*/
+	}
+	.justify{
+		text-align: justify !important;
+	}
+
+/*registro*/
+.registro{
+	justify-content: space-around !important;
+}
+.logo{
+	height: 130px;
+}
+.h3-registro{
+ 	text-align: center;
+ 	color: var(--blanco);
+ 	font-size: 1.5em;
+ }
+ .p-registro{
+ 	text-align: center;
+ 	color: var(--blanco);
+ 	font-weight: 300;
+ 	margin-top: 10px;
+ }
+ .opciones-registro{
+ 	width: 50%;
+ 	margin-left: -25%;
+ 	left: 50%;
+ 	float: left;
+ 	position: relative;
+ 	margin-top: 10px;
+ 	margin-bottom: 10px;
+ }
+ 	.opcion{
+ 		float: left;
+ 		height: 100%;
+ 		position: relative;
+ 		background: var(--opcion);
+ 		padding: 20px;
+ 		box-sizing: border-box;
+ 		margin-left: 1px !important;
+ 		margin-right: 10px !important;
+ 		border-radius: 5px;
+ 		margin-top: 10px;
+ 	}
+ 	.opcion img{
+ 		height: 150px;
+ 		background: var(--blanco);
+ 		padding: 10px;
+ 		box-sizing: border-box;
+ 	}
+ 	.opcion h3{
+ 		text-align: center;
+ 		color: var(--negro);
+ 		font-size: 1.3em;
+ 	}
+ 	.opcion p{
+ 		text-align: center;
+	 	color: var(--negro);
+	 	font-weight: 300;
+ 	}
+ 	.opcion .unete{
+		background: var(--principal);
+		height: 30px;
+		float: left;
+		position: relative;
+		border: none;
+		margin-top: 20px;
+		color: var(--blanco);
+		font-weight: 600;
+		border-radius: 5px;
+	}
+	.enlace-registro{
+		font-size: .9em;
+		text-decoration: none;
+		color: var(--blanco);
+		cursor: pointer;
+		font-weight: 400;
+	}
+		.enlace-registro:hover{
+			text-decoration: none;
+			color: var(--blanco);
+		}
+/*opcion movil*/
+/*	.opcion-movil{
+		float: left;
+ 		position: relative;
+ 		background: var(--opcion);
+ 		padding: 10px;
+ 		box-sizing: border-box;
+ 		margin-left: 15px !important;
+ 		margin-right: 15px !important;
+ 		border-radius: 5px;
+ 		margin-top: 10px;
+	}
+		.opcion-movil h3{
+			font-size: 1.2em;
+		}
+		.opcion-movil a{
+			background: var(--principal);
+			height: 30px;
+			float: left;
+			position: relative;
+			border: none;
+			color: var(--blanco);
+			font-weight: 600;
+			border-radius: 5px;
+			margin-left: 5px;
+			margin-right: 5px;
+		}*/
+
+/*query móviles*/
+
+@media only screen and (max-width: 200px) {
+	.error{
+		justify-content: center !important;
+	}
+	.error .alert{
+		height: 150px;
+	}
+	.mensaje h2{
+		font-weight: 600;
+		font-size: 2em;
+		color: #FE4747;
+	}
+	.mensaje h3{
+		font-weight: 200;
+		font-size: 1.5em;
+	}
+	.mensaje p{
+		font-weight: 200;
+		font-size: 1em;
+	}
+	/*landing*/
+	.landing>h1{
+		font-size: 3.5em;
+		text-align: center;
+	}
+	.sub{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+	.landing>h2{
+		font-size: 1.2em;
+		text-align: center;
+	}
+	/*inicio*/
+	.logo{
+		height: 100px;
+	}
+	.formulario-inicio{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+		.formulario-inicio>img{
+			height: 0px;
+		}
+	/*registro*/
+	.opciones-registro{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+
+}
+
+@media only screen and (max-width: 356px) {
+	.error{
+		justify-content: center !important;
+	}
+	.error .alert{
+		height: 150px;
+	}
+	/*molde*/
+	.molde{
+		width: 80%;
+		height: auto;
+		float: left;
+		position: fixed;
+		z-index: 999999;
+		background: var(--blanco);
+		padding: 10px;
+		box-sizing: border-box;
+		border-radius: 5px;
+		/*display: none;*/
+		top: 50%;
+		margin-top: -150px;
+		left: 50%;
+		margin-left: -40%;
+	}
+		.molde .check{
+			height: 80px;
+			margin-left: calc(50% - 40px);
+			margin-bottom: 10px;
+		}
+	.mensaje h2{
+		font-weight: 600;
+		font-size: 2em;
+		color: #FE4747;
+	}
+	.mensaje h3{
+		font-weight: 200;
+		font-size: 1.5em;
+	}
+	.mensaje p{
+		font-weight: 200;
+		font-size: 1em;
+	}
+	/*landing*/
+	.landing>h1{
+		font-size: 3.5em;
+		text-align: center;
+	}
+	.sub{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+	.landing>h2{
+		font-size: 1.2em;
+		text-align: center;
+	}
+	/*inicio*/
+	.logo{
+		height: 100px;
+	}
+		.formulario-inicio>img{
+			height: 80px;
+		}
+	/*registro*/
+	.opciones-registro{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+}
+
+
+@media only screen and (max-width: 998px) {
+	.error{
+		justify-content: center !important;
+	}
+	.error .alert{
+		height: 150px;
+	}
+	/*molde*/
+	.molde{
+		width: 80%;
+		height: auto;
+		float: left;
+		position: fixed;
+		z-index: 999999;
+		background: var(--blanco);
+		padding: 10px;
+		box-sizing: border-box;
+		border-radius: 5px;
+		display: none;
+		top: 50%;
+		margin-top: -150px;
+		left: 50%;
+		margin-left: -40%;
+	}
+		.molde .check{
+			height: 80px;
+			margin-left: calc(50% - 40px);
+			margin-bottom: 10px;
+		}
+	.mensaje h2{
+		font-weight: 600;
+		font-size: 2.5em;
+		color: #FE4747;
+	}
+	.mensaje h3{
+		font-weight: 200;
+		font-size: 2em;
+	}
+	.mensaje p{
+		font-weight: 200;
+		font-size: 1em;
+	}
+	.mensaje a{
+		font-weight: 200;
+		font-size: 1em;
+		color: var(--enlaceregistro);
+		cursor: pointer;
+		text-decoration: none;
+		margin-top: 10px;
+	}
+	/*landing*/
+	.landing>h1{
+		font-size: 3.5em;
+		text-align: center;
+	}
+	.sub{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+	.landing>h2{
+		font-size: 1.2em;
+		text-align: center;
+	}
+	/*inicio*/
+	.logo{
+		height: 100px;
+	}
+	.formulario-inicio{
+		width: 95%;
+		margin-left: 2.5% !important;
+		left: 0;
+	}
+		.formulario-inicio>img{
+			height: 60px;
+		}
+	/*registro*/
+	 .opciones-registro{
+	 	width: 60%;
+	 	margin-left: -30%;
+	 	left: 50%;
+	 	float: left;
+	 	position: relative;
+	 }
+	 	.opcion img{
+	 		height: 120px;
+	 		background: var(--blanco);
+	 		padding: 10px;
+	 		box-sizing: border-box;
+	 	}
+	/*registro form*/
+	.formulario-registro{
+		width: 95%;
+		background: var(--comentario);
+		border-radius: 5px;
+		padding: 10px;
+		box-sizing: border-box;
+		margin-top: 30px;
+		margin-left: 2.5% !important;
+		left: 0;
+	}
+		.formulario-registro div span{
+			width: 100% !important;
+			text-align: left;
+		}
+		.formulario-registro .indc{
+			float: left;
+			position: relative;
+			font-size: .9em !important;
+			width: 100% !important;
+			margin: 0px 0px !important;
+			font-weight: 100 !important;
+			color: var(--letrasside);
+			text-align: right;
+		}
+		.formulario-registro div input, .formulario-registro div select{
+			width: 100%;
+		}
+		.opciones-registro{
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+}
+

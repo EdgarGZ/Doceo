@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <html lang="es">    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}
+            Bienvenido, EVA
+        {% endblock %}
+    </title>
+    
+    {% comment %} Favicon {% endcomment %}
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+
+    {% comment %} Estilos {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}"> 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    {% comment %} Scripts {% endcomment %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
+
+    {% block extracss %}
+    {% endblock extracss %}
+
+</head>
+<body>
+    
+    {% block content %}
+    {% endblock %}
+    
+    {% comment %} <header>
+        {% block header %}
+        {% endblock %}
+    </header> {% endcomment %}
+    
+    {% comment %} <footer class="container blockquote-footer">{% block footer %}{% endblock %}</footer> {% endcomment %}
+
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+{% extends 'base/index2.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="bg"></div>
+	<!-- contenido -->
+	<div class="wrapper" id="wrapper">
+		<!-- side bar -->
+		<div class="side-bar" id="sidebar">
+			<div class="logo-bar flex">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+
+			<ul class="flex-column">
+				<li><a href="{% url '' %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/historial.png' %}">Historial</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
+			</ul>
+
+			<ul class="flex-column logout">
+				<li><a href="{% url '' %}"><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+			</ul>
+		</div>
+
+		<div class="content col-xs-12" id="content">
+			<div class="top col-xs-12 col-md-12">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
+	                <span></span>
+	                <span></span>
+	                <span></span>
+	            </button>
+	            <h1 id="top">Desactivar cuenta</h1>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 datos-basicos">
+				<p class="justify">La cuenta quedará suspendida por un período de 28 días. Pasado este tiempo, la cuenta se eliminará de manera permanente. Si quieres recuperar tu cuenta antes de este período, inicia sesión con tus datos normales.</p>
+				<div class="col-xs-12 col-md-12">
+	        		<b>Contraseña actual  </b><span class="col-xs-12 col-md-10"><input type="password" placeholder="Escribe aquí tu contraseña" value="" class="dato" min="8" maxlength="16"></span>
+	        	</div>
+				<div class="col-xs-12 col-md-12 botones">
+	        		<input type="submit" value="Desactivar cuenta" class="col-md-2 guardar">
+	        	</div>
+	        </div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#wrapper').toggleClass('active');
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+{% endblock content %}

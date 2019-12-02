@@ -1,0 +1,94 @@
+{% extends 'base/index1.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="bg"></div>
+
+	<!-- modal -->
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="eliminarUsuario">
+		<p>¿Desea eliminar al usuario <a href="{% url '' %}">Usuario</a>?</p>
+		<div class="flex botonera">
+			<input class="cancelar" type="submit" onclick="eliminarUsuario()" value="Cancelar">
+			<input class="guardar" type="submit" onclick="eliminarUsuarioS()" value="Eliminar">
+		</div>
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="eliminarUsuarioS">
+		<h2>Usuario eliminado</h2>
+		<p>Se ha borrado de la base de datos</p>
+		<img src="{% static 'img/trash.png' %}" class="check">
+	</div>
+	<!-- fin de modal -->
+
+	<!-- contenido -->
+
+	<div class="wrapper" id="wrapper">
+		<!-- side bar -->
+		<div class="side-bar" id="sidebar">
+			<div class="logo-bar flex">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+
+			<ul class="flex-column">
+				<li><a href="{% url '' %}"><img src="{% static 'img/us.png' %}">Tutores</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/tutores.png' %}">Tutorados</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/profesor.png' %}">Profesores</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/foco.png' %}">Áreas de conocimiento</a></li>
+				<li><a href="{% url '' %}"><img src="{% static 'img/historial.png' %}">Estadísticas</a></li>
+			</ul>
+
+			<ul class="flex-column logout">
+				<li><a href="{% url '' %}"><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+			</ul>
+		</div>
+
+		<div class="content col-xs-12" id="content">
+			<!-- <h1>Notificaciones</h1>
+			<div class="col-xs-12 col-md-12 notificaciones">
+				<p class=""><a href="">José Emmanuel Gutiérrez Hernández</a> ha aceptado la tutoría Paradigmas de la Programación | <a onclick="verNoti()">Ver detalles</a></p>
+			</div> -->
+			<div class="top col-xs-12 col-md-12">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
+	                <span></span>
+	                <span></span>
+	                <span></span>
+	            </button>
+	            <h1 id="top">Tutorados</h1>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 search" style="margin-top: 10px;">
+	        	<div class="flex col-xs-12 buscador">
+	        		<input type="search" name="" placeholder="Escribe aquí el nombre del tutorado" class="col-xs-8 col-md-5">
+	        		<input type="submit" name="" value="Buscar" class="col-xs-4 col-md-2">
+	        	</div>
+	        </div>
+
+	        <div class="col-xs-12 col-md-12 admin-tutores flex-column">
+	        <!-- cuando no haya datos para poder mostrar -->
+	        <p class="col-md-12 no-datos">No hay información que mostrar por el momento</p>
+	        <!-- fin de no mostrar datos -->
+	        	<div class="col-xs-12 col-md-11 admin-tutor">
+	        		<p class="col-md-4 col-sm-4 col-xs-12"></p>
+	        		<p class="ago col-md-3 col-sm-3 col-xs-12"></p>
+	        		<a class="col-md-2 col-sm-2 col-xs-12" href="{% url 'usuario:tipo' %}">Ver perfil</a>
+	        		<a class="col-md-2 col-sm-2 col-xs-12" onclick="eliminarUsuario()">Baja Usuario</a>
+	        	</div>
+	        </div>
+			
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+            	$('#wrapper').toggleClass('active');
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+{% endblock content %}

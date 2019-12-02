@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	Log-In Doceo
+{% endblock title %}
+
+{% block content %}
+    <div class="bg"></div>
+	
+	<!-- modal -->
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error6">
+		<h2>Contraseña y/o usuario incorrecto</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error7">
+		<h2>Completa todos los campos solicitados</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+	<!-- fin de modal -->
+
+	<div class="container-fluid altura">
+		<div class="landing inicio col-xs-12">
+			<center class="col-md-12">
+				<img src="{% static 'img/logo.png' %}" class="logo">
+				<h3 class="col-md-12 col-xs-12 h3-inicio">Iniciar sesión</h3>
+			</center>
+			<div class="hidden-md vacio2"></div>
+			<form class="formulario-inicio flex-column col-md-4 col-md-offset-4 col-xs-12 col-sm-5" method="POST" action="{% url 'users:login_view' %}">
+			{% csrf_token %}
+				<img src="{% static 'img/user.png' %}">
+				<p class="col-md-11">Nombre de Usuario</p>
+				<div class="input-group col-md-11 col-sm-11 col-xs-11">
+				    <span class="input-group-addon" id="basic-addon1"><img class="icon" src="{% static 'img/us.png' %}"></span>
+				    <input type="text" class="form-control" placeholder="Nombre de Usuario" name="username">
+				</div>
+				<p class="col-md-11">Contraseña</p>
+				<div class="input-group col-md-11 col-sm-11 col-xs-11">
+				    <span class="input-group-addon" id="basic-addon1"><img class="icon" src="{% static 'img/pass.png' %}"></span>
+				    <input type="password" class="form-control" placeholder="Contraseña" name="password">
+				</div>
+				<div class="flex input-group col-md-11 boton">
+				    <button class="col-md-4">Iniciar sesión</button>
+				</div>
+				<a href="">Olvidé mi contraseña</a>
+			</form>
+			<a href="{% url 'users:sign_up_options' %}" class="flex">No tengo una cuenta</a>
+		</div>
+	</div>
+	<script>
+			function error(){
+				modal();
+				document.getElementById('error6').classList.toggle('ver-molde');
+				setTimeout(function(){
+					document.querySelector('.bg').classList.remove('ver-bg');
+					document.getElementById('error6').classList.remove('ver-molde');
+				}, 1200);
+			}
+		</script>
+	{% if error %}
+		<input type="text" value="{{error}}" hidden>
+		<script>
+			error();
+		</script>
+	{% endif %}
+{% endblock content %}

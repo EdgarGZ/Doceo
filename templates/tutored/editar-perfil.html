@@ -1,0 +1,149 @@
+{% extends 'tutored/index.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	Título de la página
+{% endblock title %}
+
+{% block content %}
+	<div class="bg"></div>
+
+	<!-- modal -->
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="cambios">
+		<h2>Cambios realizados</h2>
+		<p>Puedes visualizarlos en tu perfil</p>
+		<img src="{% static 'img/check.png' %}" class="check">
+	</div>
+
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error1">
+		<h2>La contraseña debe tener un mínimo de 8 caracteres y un máximo de 16 caracteres</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+
+	<!-- fin de modal -->
+
+	<!-- contenido -->
+	{% if form.errors %}
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="error2">
+		<h2>Completa todos los campos solicitados</h2>
+		<p>Intenta nuevamente</p>
+		<img src="{% static 'img/warning.png' %}" class="check">
+	</div>
+	{% endif %}
+
+	<div class="wrapper" id="wrapper">
+		<!-- side bar -->
+		<div class="side-bar" id="sidebar">
+			<div class="logo-bar flex">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+
+			<ul class="flex-column">
+				<li><a href="{% url 'tutored:tutored' user.username %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href="{% url 'tutored:tutorias' user.username %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href=""><img src="{% static 'img/historial.png' %}">Historial</a></li>
+				<li><a href=""><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
+			</ul>
+
+			<ul class="flex-column logout">
+				<li><a href="{% url 'users:logout' %}"><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+			</ul>
+		</div>
+
+		<div class="content col-xs-12" id="content">
+			<div class="top col-xs-12 col-md-12">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
+	                <span></span>
+	                <span></span>
+	                <span></span>
+	            </button>
+	            <h1 id="top">Editar perfil</h1>
+	        </div>
+
+	        <form class="col-xs-12 col-md-12 datos-basicos", method="POST", action="{% url 'tutored:save_edit_user' request.user.username %}">
+				{% csrf_token %}
+	        	<div class="col-xs-12 col-md-12">
+					<b class="">Nombre completo </b><span class="col-xs-12 col-md-10"><input type="text" name="nombre" value="{% if form.nombre.errors %}{{ form.nombre.value }}{% else %}{{ usuario.nombre }}{% endif %}" class="dato" placeholder="Escribe aquí tu modificación de nombre"></span>
+					{% for error in form.nombre.errors %}
+						<b style="color: red; width: 100%;">{{ error }}</b>
+					{% endfor%}
+	        	</div>
+	        	<div class="col-xs-12 col-md-12">
+					<b>Correo electrónico </b><span class="col-xs-12 col-md-10"><input type="email" name="correo" value="{% if form.correo.errors %}{{ form.correo.value }}{% else %}{{ usuario.correo }}{% endif %}" class="dato" placeholder="Escribe aquí tu nuevo correo electrónico"></span>
+						{% for error in form.correo.errors %}
+							<b style="color: red; width: 100%;">{{ error }}</b>
+						{% endfor%}
+				</div>
+				<div class="col-xs-12 col-md-12">
+					<b>Descripción: </b><span class="col-xs-12 col-md-10"><input type="text" name="descripcion", placeholder="Descripción: debe contener minimo 10 palabras" value="{% if form.descripcion.errors %}{{ form.descripcion.value }}{% else %}{{ usuario.descripcion }}{% endif %}" class="dato"></span>
+					{% for error in form.descripcion.errors %}
+						<b style="color: red; width: 100%;">{{ error }}</b>
+					{% endfor%}
+	        	</div>
+	        	<div class="col-xs-12 col-md-12 botones">
+	        		<input type="submit" onclick="cambiosHechos()" value="Guardar cambios" class="col-md-2 guardar">
+	        		<input type="submit" onclick="borrarCampos()" value="Borrar" class="col-md-2 cancelar">
+	        	</div>
+	        </form>
+
+			<h1>Cambiar contraseña</h1>
+
+	        <form class="col-xs-12 col-md-12 datos-basicos" method="POST" action="{% url 'tutored:save_edit_password' user.username %}">
+				{% csrf_token %}
+	        	<div class="col-xs-12 col-md-12">
+					<b>Contraseña actual  </b><span class="col-xs-12 col-md-10"><input name="curr_password" type="password" placeholder="Escribe aquí tu contraseña actual" ="" value="" class="dato" min="8" maxlength="16"></span>
+					{% for error in form.curr_password.errors %}
+						<b style="color: red; width: 100%;">{{ error }}</b>
+					{% endfor%}
+	        	</div>
+	        	<div class="col-xs-12 col-md-12">
+	        		<b>Nueva contraseña  </b><span class="col-xs-12 col-md-10"><input name="password" type="password" placeholder="Escribe aquí tu nueva contraseña" ="" value="" class="dato" min="8" maxlength="16"></span>
+	        	</div>
+	        	<div class="col-xs-12 col-md-12">
+					<b>Repetir contraseña </b><span class="col-xs-12 col-md-10"><input name="password_confirmation" type="password" placeholder="Repite tu nueva contraseña" ="" value="" class="dato" min="8" maxlength="16"></span>
+					{% for error in form.password_confirmation.errors %}
+						<b style="color: red; width: 100%;">{{ error }}</b>
+					{% endfor%}
+	        	</div>
+	        	<div class="col-xs-12 col-md-12 botones">
+	        		<input type="submit" onclick="cambiosHechos()" ="" value="Guardar cambios" class="col-md-2 guardar">
+	        		<input type="submit" onclick="borrarCampos()" value="Borrar" class="col-md-2 cancelar">
+	        	</div>
+	        </form>
+
+
+	        <h1>Cambiar foto de perfil</h1>
+
+	        <form class="col-xs-12 col-md-12 datos-basicos" method="POST" enctype="multipart/form-data" action="{% url 'tutored:save_profile_pic' user.username %}">
+				{% csrf_token %}
+	        	<div class="col-xs-12 col-md-12">
+					<b>Nueva foto </b><span class="col-xs-12 col-md-10"><input type="file" name="foto" value="" class=""></span>
+					{% for error in form.foto.errors %}
+						<b style="color: red; width: 100%;">{{ error }}</b>
+					{% endfor%}
+	        	</div>
+	        	<div class="col-xs-12 col-md-12 botones">
+	        		<input type="submit" onclick="cambiosHechos()" value="Guardar cambios" class="col-md-2 guardar">
+	        	</div>
+	        </form>
+
+	        <div class="col-xs-12 col-md-12 cuenta">
+				<a href="">Desactivar cuenta</a>
+			</div>
+			
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#wrapper').toggleClass('active');
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	Título de la página
+{% endblock title %}
+
+{% block content %}
+	<div class="container-fluid altura">
+		<div class="landing registro col-xs-12 col-md-12">
+			<center class="col-md-12">
+				<img src="{% static 'img/logo.png' %}" class="logo">
+				<h3 class="col-md-12 col-xs-12 h3-registro">Otra forma de aprender enseñando</h3>
+				<p class="col-md-12 col-xs-12 p-registro">Elige el perfil que deseas: </p>
+			</center>
+			<div class="opciones-registro flex">
+				<div class="opcion col-md-5 col-xs-12 flex-column">
+					<img src="{% static 'img/student1.png' %}">
+					<h3>Alumno tutor</h3>
+					<p>Comparte tus conocimientos</p>
+					<a class="col-md-8 unete flex" href="{% url 'users:sign_up_tutor' %}">Únete</a>
+				</div>
+				<div class="opcion col-md-5 col-xs-12 flex-column">
+					<img src="{% static 'img/student2.png' %}">
+					<h3>Alumno tutorado</h3>
+					<p>Resuelve tus dudas con confianza</p>
+					<a class="col-md-8 unete flex" href="{% url 'users:sign_up_tutorado' %}">Únete</a>
+				</div>
+			</div>
+			<a class="col-xs-12 col-md-12" href="{% url 'users:login_view' %}">Ya tengo un perfil</a>
+		</div>
+	</div>
+{% endblock content %}

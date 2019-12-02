@@ -1,0 +1,28 @@
+{% extends 'base/index2.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="container-fluid altura">
+		<div class="landing flex-column inicio col-xs-12 col-md-12">
+			<center class="col-md-12">
+				<img src="{% static 'img/logo.png' %}" class="logo">
+				<h3 class="col-md-12 col-xs-12 h3-inicio">Recuperar contraseña</h3>
+				<br>
+				<p class="col-md-12 col-xs-12 p-inicio">Proporciona el correo electrónico que utilizaste para registrarte en la plataforma. <br>Recibirás un enlace para poder acceder nuevamente a tu cuenta.</p>
+			</center>
+			<div class="formulario-inicio flex-column">
+				<p class="col-md-12">Correo electrónico</p>
+				<div class="input-group col-md-12 col-sm-12 col-xs-12">
+				  <span class="input-group-addon" id="basic-addon1"><img class="icon" src="{% static 'img/email.png' %}"></span>
+				  <input type="text" class="form-control" placeholder="Correo electrónico">
+				</div>
+				<div class="flex input-group col-md-11 boton">
+				  <button class="col-md-4">Enviar</button>
+				</div>
+			</div>
+			<div class="vacio"></div>
+		</div>
+	</div>
+{% endblock content %}

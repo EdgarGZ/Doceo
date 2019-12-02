@@ -1,0 +1,19 @@
+{% extends 'base/index2.html' %}
+{% load staticfiles %}
+{% block title %}
+Título de la página
+{% endblock title %}
+{% block content %}
+	<div class="container-fluid altura">
+		<div class="error flex-column col-xs-12 col-md-12">
+			<center class="col-md-12">
+				<img src="{% static 'img/warning.png' %}" class="alert">
+			</center>
+			<center class="col-md-6 mensaje">
+				<h3>Solicitud rechazada</h3>
+				<p>Tu solicitud de tutor ha sido rechazada. Te recomendamos acercarte con algún profesor o enviarnos un correo para mayor información a <b>doceotutorias@gmail.com</b><br><br><a href="{% url '' %}">Volver a inicio</a></p>
+				<img src="{% static 'img/logo.png' %}" class="logo">
+			</center>
+		</div>
+	</div>
+{% endblock content %}

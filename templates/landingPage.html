@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	Doceo
+{% endblock title %}
+
+{% block content %}
+	<div class="container-fluid altura">
+		<div class="landing flex-column col-xs-12 col-md-12">
+			<h1 class="col-xs-12">Bienvenido a</h1>
+			<div class="sub col-xs-12">
+				<img src="{% static 'img/logo.png' %}">
+			</div>
+			<h2 class="col-xs-12 col-md-12">Enseña, aprende y colabora</h2>
+
+			<div class="botones col-xs-12 col-md-12 flex">
+				<a href="{% url 'users:sign_up_options' %}" class="col-xs-6 col-md-2">Registrarme</a>
+				<a href="{% url 'users:login_view' %}" class="col-xs-6 col-md-2">Iniciar Sesión</a>
+			</div>
+		</div>
+	</div>
+{% endblock content %}
