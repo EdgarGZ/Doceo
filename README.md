@@ -8,13 +8,13 @@ Take a look to the project design here: https://www.figma.com/file/dBdoVHpLBsNIW
 And take a look to all the docs and a promotional video here: 
 https://drive.google.com/drive/folders/1E7gnhhVsET_kt9QZgQomJcSU8aYYNDf8?usp=sharing
 
-Design:
-  - Barrón Olguín María José
-Front-End:
-  - Juarez Tirado María Fernada
-Back-Ends:
-  - Gómez Zárate Edgar Omar
-  - Toral Pacheco Samuel
-Documentation
-  - Barrón Olguín María José
-  - Gómez Zárate Edgar Omar
+- Design:
+    - Barrón Olguín María José
+- Front-End:
+    - Juarez Tirado María Fernada
+- Back-Ends:
+    - Gómez Zárate Edgar Omar
+    - Toral Pacheco Samuel
+- Documentation
+    - Barrón Olguín María José
+    - Gómez Zárate Edgar Omar
