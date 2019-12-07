@@ -1,6 +1,6 @@
 Doceo
 
-This is a schoolar project we made for Software Engineering subject. 
+This is a scholar project we made for Software Engineering subject. 
 It was made with functions but right now I'm changing all the functions with classes.
 Classes are cleaner and makes the code more understandable.
 
