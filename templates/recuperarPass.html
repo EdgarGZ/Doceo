@@ -1,10 +1,17 @@
-{% extends 'base/index2.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
+
 {% block title %}
-Título de la página
+	Reestablecer Password
 {% endblock title %}
+
 {% block content %}
 	<div class="container-fluid altura">
+
+		{% for message in messages %}
+			<li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+
 		<div class="landing flex-column inicio col-xs-12 col-md-12">
 			<center class="col-md-12">
 				<img src="{% static 'img/logo.png' %}" class="logo">
@@ -12,16 +19,17 @@ Título de la página
 				<br>
 				<p class="col-md-12 col-xs-12 p-inicio">Proporciona el correo electrónico que utilizaste para registrarte en la plataforma. <br>Recibirás un enlace para poder acceder nuevamente a tu cuenta.</p>
 			</center>
-			<div class="formulario-inicio flex-column">
+
+			<form class="formulario-inicio flex-column" method="POST">
+				{% csrf_token %}
 				<p class="col-md-12">Correo electrónico</p>
 				<div class="input-group col-md-12 col-sm-12 col-xs-12">
-				  <span class="input-group-addon" id="basic-addon1"><img class="icon" src="{% static 'img/email.png' %}"></span>
-				  <input type="text" class="form-control" placeholder="Correo electrónico">
+				  {{ form.as_p }}
 				</div>
 				<div class="flex input-group col-md-11 boton">
 				  <button class="col-md-4">Enviar</button>
 				</div>
-			</div>
+			</form>
 			<div class="vacio"></div>
 		</div>
 	</div>

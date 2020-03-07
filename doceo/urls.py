@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('apps.users.urls', 'apps.users')),
     path('tutorado/', include('apps.tutored.urls', 'apps.tutored')),
     path('tutor/', include('apps.tutor.urls', 'apps.tutor')),
+    path('administrator/', include('apps.administrator.urls', 'apps.administrator')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

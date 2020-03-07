@@ -1,0 +1,13 @@
+{% load i18n %}{% autoescape off %}
+{% trans "Recibiste este email porque solicitaste un reestablecimiento de contraseña para tu usuario en el sitio web Doceo." %}
+
+{% trans "Por favor, da click en el siguiente enlace para reestablecer tu contraseña:" %}
+{% block reset_link %}
+{{ domain }}{% url 'usuario:restablecer' uidb64=uid token=token %} 
+{% endblock reset_link %}
+
+{% trans "Gracias por usar Doceo" %}
+
+{% trans "Atte. el equipo de Doceo" %}
+
+{% endautoescape %}

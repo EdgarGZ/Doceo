@@ -61,7 +61,7 @@
 	            <h1 id="top">Editar perfil</h1>
 	        </div>
 
-	        <form class="col-xs-12 col-md-12 datos-basicos", method="POST", action="{% url 'tutored:save_edit_user' request.user.username %}">
+	        <form class="col-xs-12 col-md-12 datos-basicos" method="POST" action="{% url 'tutored:save_edit_user' request.user.username %}">
 				{% csrf_token %}
 	        	<div class="col-xs-12 col-md-12">
 					<b class="">Nombre completo </b><span class="col-xs-12 col-md-10"><input type="text" name="nombre" value="{% if form.nombre.errors %}{{ form.nombre.value }}{% else %}{{ usuario.nombre }}{% endif %}" class="dato" placeholder="Escribe aquí tu modificación de nombre"></span>

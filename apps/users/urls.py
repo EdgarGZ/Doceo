@@ -38,6 +38,12 @@ urlpatterns = [
     ),
 
     path(
+        route='password_reset/',
+        view=views.ResetPasswordRequestView.as_view(),
+        name='password_reset'
+    ),
+
+    path(
         route='logout/',
         view=views.LogoutView.as_view(),
         name='logout'

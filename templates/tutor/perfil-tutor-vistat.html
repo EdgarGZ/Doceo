@@ -10,15 +10,14 @@ Título de la página
 	<div class="bg"></div>
 
 	<!-- modal -->
-	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="addArea">
+	<form class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="addArea" method="POST" action="{% url 'tutor:add_subarea' user.username %}">
+		{% csrf_token %}
 		<img src="{% static 'img/cancel.png' %}" class="clo" alt="" onclick="agregarAreaC()">
-		<h2>Nueva área de conocimiento</h2>
+		<h2>Nueva subárea de conocimiento</h2>
 		<p>Selecciona una opción:</p>
-		<select>
-			<option>Matemáticas</option>
-		</select>
+		{{ subarea_form.subareas }}
 		<input type="submit" name="" value="Agregar" onclick="agregarAreaS()">
-	</div>
+	</form>
 
 	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="addAreaCheck">
 		<h2>Área de conocimiento agregada</h2>
@@ -54,8 +53,8 @@ Título de la página
 			</div>
 
 			<ul class="flex-column">
-				<li><a href=""><img src="{% static 'img/us.png' %}">Perfil</a></li>
-				<li><a href=""><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href="{% url 'tutor:tutor' user.username %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href="{% url 'tutor:tutorias' user.username %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
 				<li><a href=""><img src="{% static 'img/historial.png' %}">Historial</a></li>
 				<li><a href=""><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
 			</ul>
@@ -79,7 +78,7 @@ Título de la página
 			<div class="col-xs-12 col-md-12 informacion">
 				<div class="foto-perfil flex-column col-xs-12 col-sm-2 col-md-2">
 					{% if usuario.foto.url %}<img class="img-responsive" src="{{ usuario.foto.url }}">{% else %}<img class="img-responsive" src="{% static 'img/perfil.png' %}">{% endif %}
-					<a href="" class=""><img src="{% static 'img/edit-p.png' %}"> Modificar perfil</a>
+					<a href="{% url 'tutor:edit' user.username %}" class=""><img src="{% static 'img/edit-p.png' %}"> Modificar perfil</a>
 				</div>
 				
 				<div class="col-xs-12 col-sm-10 col-md-10 datos">
@@ -93,7 +92,7 @@ Título de la página
 			</div>
 
 			
-			<h1>Área de especialidad</h1>
+			<h1>Área de Conocimiento</h1>
 
 			<div class="col-xs-12 col-md-12 cont-areas">
 				<div class="col-xs-11 col-sm-5 col-md-2 flex-column area {{ tutor.area_especialidad|addunderscore }}">
@@ -102,17 +101,25 @@ Título de la página
 				</div>
 			</div>
 
-			<h1>Áreas de conocimiento</h1>
+			<h1>Subáreas de conocimiento</h1>
 
 			<div class="col-xs-12 col-md-12 cont-areas">
+				{% for suabarea in mis_subareas %}
 				<div class="col-xs-11 col-sm-5 col-md-2 flex-column area prog">
 					<a onclick="del()" title="Eliminar área"><img src="{% static 'img/cancel.png' %}"></a>
-					<p>Mate</p>
+					<p>{{ suabarea.1 }}</p>
 				</div>
+				{% empty %}
+					<p class="col-xs-11 col-md-18 add-area" style="color: sienna; font-weight: bold;">No tienes subáreas de conocimiento. 🙁</p>
+				{%endfor%}
 
-				<div class="col-xs-12 col-md-12 add-area">
-					<p class="">¿Tienes alguna otra área de conocimiento que quieras agregar a tu perfil?</p>
-					<button class="hidden-xs hidden-sm col-md-3" onclick="addArea()">Agregar área de conocimiento</button>
+				<div class="col-xs-11 col-md-18 add-area">
+					{% if my_subareas|length > 0 %}
+						<p class="">¿Tienes alguna otra subárea de conocimiento que quieras agregar a tu perfil?</p>
+					{% else %}
+						<p class="">Comienza añadiendo una subárea de conocimiento con el boton de la derecha. 🤓👉</p>
+					{% endif %}
+					<button class="hidden-xs hidden-sm col-md-3" onclick="addArea()">Agregar subárea de conocimiento</button>
 					<button class="hidden-md hidden-lg col-xs-12" onclick="addArea()">Agregar área</button>
 				</div>
 			</div>
@@ -145,5 +152,17 @@ Título de la página
                 $(this).toggleClass('active');
             });
         });
+
+		function addNewKnowledgeArea(user){
+			ajax=new XMLHttpRequest();
+			ajax.open("GET",``);
+			ajax.send();
+			ajax.onreadystatechange=function(){
+				if (ajax.status==200 && ajax.readyState==4){
+					document.getElementById('addAreaDel').innerHTML=ajax.responseText
+					del()
+				}
+			}
+		}
     </script>
 {% endblock content %}

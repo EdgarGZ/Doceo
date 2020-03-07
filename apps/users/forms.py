@@ -74,7 +74,7 @@ class SignupBaseUserForm(forms.Form):
         return data
 
     def save(self):
-        """ Create new user and profile """
+        """ Create new user """
         data = self.cleaned_data
         data.pop('password_confirmation')
 
@@ -142,3 +142,32 @@ class SignupTutorForm(forms.ModelForm):
             'carrera': forms.Select(choices=CARRERAS, attrs={'class' : 'form-control'}),
             'area_especialidad': forms.Select(choices=AREAS, attrs={'class' : 'form-control'}),
         }
+
+
+class PasswordResetRequestForm(forms.Form):
+    correo = forms.EmailField()
+
+    def __init__(self, *args, **kwargs):
+        super(PasswordResetRequestForm, self).__init__(*args, **kwargs)
+        self.fields['correo'].widget.attrs = {'class':'form-control'}
+
+
+class SetPasswordForm(forms.Form):
+    error_messages = {
+        'password_mismatch': ("Las contraseñas no coinciden."),
+        }
+    new_password1 = forms.CharField(label=("Nueva contraseña"),
+                                    widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    new_password2 = forms.CharField(label=("Confirmar nueva contraseña"),
+                                    widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError(
+                    self.error_messages['password_mismatch'],
+                    code='password_mismatch',
+                    )
+        return password2
