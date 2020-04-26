@@ -26,7 +26,7 @@ Título de la página
 	</div>
 
 	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="addAreaDel">
-		<img src="{% static 'img/cancel.png' %}" class="clo" alt="">
+		<img src="{% static 'img/cancel.png' %}" class="clo" alt="" onclick="eliminarAreaC()">
 		<p>¿Desea eliminar el área de conocimiento?</p>
 		<p class="b">Podrá agregarla posteriormente</p>
 		<div class="flex botonera">
@@ -114,7 +114,7 @@ Título de la página
 				{%endfor%}
 
 				<div class="col-xs-11 col-md-18 add-area">
-					{% if my_subareas|length > 0 %}
+					{% if mis_subareas|length > 0 %}
 						<p class="">¿Tienes alguna otra subárea de conocimiento que quieras agregar a tu perfil?</p>
 					{% else %}
 						<p class="">Comienza añadiendo una subárea de conocimiento con el boton de la derecha. 🤓👉</p>

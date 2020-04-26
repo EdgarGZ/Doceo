@@ -9,9 +9,13 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from apps.users.models import Usuario
 from apps.tutored.models import Tutorado
+from apps.tutorships.models import HorarioTutoria
 
 # Forms
 from apps.tutored.forms import EditProfileTutoredForm, ChangePasswordForm, ChangeProfilePicForm
+
+# Utilities
+from datetime import datetime, date
 
 
 # Create your views here.
@@ -170,5 +174,33 @@ class ChangeProfilePicView(LoginRequiredMixin, FormView):
         return str(success_url)
 
 
-class TutoriasTutoradoView(TemplateView):
+class TutoriasTutoradoView(LoginRequiredMixin, DetailView):
+    """ Tutor tutorships view """
+
     template_name = 'tutored/tutorias-tutorado.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username' # del lado del path de las urls
+    queryset = User.objects.all()
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        """ Add user's extended models to context """
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context['usuario'] = Usuario.objects.get(user=user)
+        context['tutorado'] = Tutorado.objects.get(usuario=context['usuario'])
+        context['tutorias'] = self.get_tutorias_disponibles()
+        return context
+
+    def get_tutorias_disponibles(self):
+        hoy = datetime.today().day
+        tutorias = HorarioTutoria.objects.all()
+        tutorias_vigentes = []
+
+        for tutoria in tutorias:
+            dia = tutoria.dia
+            dia = dia.split(', ')
+            if int(dia[1]) > int(hoy):
+                tutorias_vigentes.append(tutoria)
+
+        return tutorias_vigentes

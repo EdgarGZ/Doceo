@@ -1,5 +1,6 @@
 {% extends 'tutor/index.html' %}
 {% load staticfiles %}
+{% load tutor_tags %}
 
 {% block title %}
 	Título de la página
@@ -58,8 +59,8 @@
 			</div>
 
 			<ul class="flex-column">
-				<li><a href=""><img src="{% static 'img/us.png' %}">Perfil</a></li>
-				<li><a href=""><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href="{% url 'tutor:tutor' user.username %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href="{% url 'tutor:tutorias' user.username %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
 				<li><a href=""><img src="{% static 'img/historial.png' %}">Historial</a></li>
 				<li><a href=""><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
 			</ul>
@@ -76,85 +77,110 @@
 			</div>
 			<div class="top col-xs-12 col-md-12">
 				<button type="button" id="sidebarCollapse" class="navbar-btn">
-	                <span></span>
-	                <span></span>
-	                <span></span>
-	            </button>
-	            <h1 id="top" class="hidden-xs">Tutorías pendientes</h1>
-	            <h1 id="top" class="hidden-sm hidden-md hidden-lg">Tutorías <br> pendientes</h1>
-	        </div>
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
+				<h1 id="top" class="hidden-xs">Tutorías pendientes</h1>
+				<h1 id="top" class="hidden-sm hidden-md hidden-lg">Tutorías <br> pendientes</h1>
+			</div>
 
-	        <div class="col-xs-12 col-md-12 tutorias">
-	        	<div class="tutoria flex-column">
-	        		<div class="media-dos bd2">
-	        			<p class="a">Matemáticas</p>
-	        			<p>Cálculo diferencial</p>
-	        		</div>
-	        		<img src="{% static 'img/perfil.png' %}">
-	        		<div class="media-tres flex-column">
-	        			<p>María Mendoza López</p>
-	        			<p>Lunes 19</p>
-	        			<p>1:00 PM - 2:00 PM</p>
-	        			<a href="">Opciones</a>
-	        		</div>
-	        	</div>
-	        </div>
+			<div class="col-xs-12 col-md-12 tutorias">
+				<div class="tutoria flex-column">
+					<div class="media-dos bd2">
+						<p class="a">Matemáticas</p>
+						<p>Cálculo diferencial</p>
+					</div>
+					<img src="{% static 'img/perfil.png' %}">
+					<div class="media-tres flex-column">
+						<p>María Mendoza López</p>
+						<p>Lunes 19</p>
+						<p>1:00 PM - 2:00 PM</p>
+						<a href="">Opciones</a>
+					</div>
+				</div>
+			</div>
 
-	        <h1>Horarios</h1>
+			<h1>Horarios</h1>
 
-	        <div class="col-xs-12 col-md-12 horarios">
-	        	<div class="col-xs-12 col-md-3 horario">
-	        		<img src="{% static 'img/cancel.png' %}" onclick="borrarHorario()"></a>
-	        		<h3>Álgebra lineal</h3>
-	        		<p>Sesión 5:00 PM - Lunes</p>
-	        	</div>
-	        </div>
+			<div class="col-xs-12 col-md-12 horarios">
+				{% for horario in horarios %}
+				<div class="col-xs-12 col-md-3 horario">
+					<img src="{% static 'img/cancel.png' %}" onclick="borrarHorario()"></a>
+					<h3>{{ horario.subarea_especialidad.subarea|uppercase  }}</h3>
+					<p>Sesión: {{ horario.dia }} de {{ horario.hora_inicio }} a {{ horario.hora_final }}</p>
+				</div>
+				{% empty %}
+					<p style="color: red;"><strong>Añade un nuevo horario en el formulario que se encuentra debajo</strong></p>
+				{% endfor %}
+			</div>
 
-	        <h1>Ofertar horarios</h1>
+			<h1>Ofertar horarios</h1>
 
-	        <div class="col-xs-12 col-md-12 ofertar">
-	        	<p class="ind col-xs-12">Rellena el siguiente formulario para ofertar un nuevo horario de tutoría</p>
+			<div class="col-xs-12 col-md-12 ofertar">
+				<p class="ind col-xs-12">Rellena el siguiente formulario para ofertar un nuevo horario de tutoría</p>
 
-	        	<div class="col-xs-12 col-md-12 datos-basicos noborder">
-		        	<div class="col-xs-12 col-md-12">
-		        		<b class="">Área de conocimiento </b><span class="col-xs-12 col-md-10"><select class="dato">
-		        			<option></option>
-		        		</select></span>
-		        	</div>
-		        	<div class="col-xs-12 col-md-12">
-		        		<b>Categoría </b><span class="col-xs-12 col-md-10"><select class="dato">
-		        			<option></option>
-		        		</select></span>
-		        	</div>
-		        	<div class="fecha">
-			        	<div class="col-xs-12">
-			        		<b>Día </b><span class="col-xs-12 col-md-8">
-			        			<select class="dato">
-			        				<option>01</option>
-			        			</select>
-			        		</span>
-			        	</div>
-			        	<div class="col-xs-12">
-			        		<b>H. Inicio </b><span class="col-xs-12 col-md-8"><input type="time" min="00:00" max="24:00" step="600" class="dato"></span>
-			        	</div>
-			        	<div class="col-xs-12">
-			        		<b>H. Fin </b><span class="col-xs-12 col-md-8"><input type="time" min="00:00" max="24:00" step="600" class="dato"></span>
-			        	</div>
-			        </div>
-			        <div class="col-xs-12 col-md-12">
-		        		<b>Lugar de encuentro </b><span class="col-xs-12 col-md-10"><input type="text" name="" value="" class="dato" placeholder="Escribe aquí el lugar de encuentro"></span>
-		        	</div>
+				<form class="col-xs-12 col-md-12 datos-basicos noborder" method="POST" action="{% url 'tutor:schedule' request.user.username %}">
+					{% csrf_token %}
+					<div class="col-xs-12 col-md-12">
+						<b class="">Área de especialidad </b>
+						<span class="col-xs-12 col-md-10">
+							<input type="text" name="area_especialidad" value="{{ tutor.area_especialidad|uppercase }}" class="dato" style="cursor: default;">
+							{%comment%}<select class="dato">
+								<option></option>
+							</select>{%endcomment%}
+						</span>
+						{% for error in form.area_especialidad.errors %}
+							<b style="color: red; width: 100%;">{{ error }}</b>
+						{% endfor%}
+					</div>
+					<div class="col-xs-12 col-md-12">
+						<b>Subárea de especialidad </b>
+						<span class="col-xs-12 col-md-10">
+						{% if mis_subareas|length > 0 %}
+							<select class="dato" name="subarea_especialidad">
+								{% for subarea in mis_subareas %}
+								<option value="{{ subarea.0 }}">{{ subarea.1 }}</option>
+								{% endfor %}
+							</select>
+						{% else %}
+							<input type="text" value="Agrega un área de especialidad para poder añadir un horario." class="dato" disabled="true" style="cursor: default;">
+						{% endif %}
+						</span>
+						{% for error in form.subarea_especialidad.errors %}
+							<b style="color: red; width: 100%;">{{ error }}</b>
+						{% endfor%}
+					</div>
+					<div class="fecha">
+						<div class="col-xs-12">
+							<b>Día </b><span class="col-xs-12 col-md-8">
+								<select class="dato" name="dia">
+									{% for day in weekdays %}
+										<option value="{{ day.format }}">{{ day.format }}</option>
+									{% endfor %}
+								</select>
+							</span>
+						</div>
+						<div class="col-xs-12">
+							<b>H. Inicio </b><span class="col-xs-12 col-md-8"><input name="hora_inicio" type="time" min="00:00" max="24:00" step="600" class="dato"></span>
+						</div>
+						<div class="col-xs-12">
+							<b>H. Fin </b><span class="col-xs-12 col-md-8"><input name="hora_fin" type="time" min="00:00" max="24:00" step="600" class="dato"></span>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-12">
+						<b>Lugar de encuentro </b><span class="col-xs-12 col-md-10"><input type="text" name="lugar" class="dato" placeholder="Escribe aquí el lugar de encuentro"></span>
+						{% for error in form.lugar.errors %}
+							<b style="color: red; width: 100%;">{{ error }}</b>
+						{% endfor%}
+					</div>
 
-		        	<div class="col-xs-12 col-md-12 botones">
-		        		<input type="submit" onclick="cambiosHechos()" value="Ofertar horarios" class="col-md-2 guardar">
-		        		<input type="submit" onclick="borrarCampos()" value="Borrar" class="col-md-2 cancelar">
-		        	</div>
-		        </div>
-
-	   
-	        </div>
-
-			
+					<div class="col-xs-12 col-md-12 botones">
+						<input type="submit" onclick="cambiosHechos()" value="Ofertar horarios" class="col-md-2 guardar pull-right">
+						{% comment %}<input type="submit" onclick="borrarCampos()" value="Borrar" class="col-md-2 cancelar">{% endcomment %}
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 
@@ -168,5 +194,5 @@
                 $(this).toggleClass('active');
             });
         });
-    </script>
+	</script>
 {% endblock content %}

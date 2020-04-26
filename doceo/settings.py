@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'apps.tutor',
     'apps.knowledge_area',
     'apps.administrator',
+    'apps.tutorships',
+
+    # Third party apps
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +79,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'doceo.wsgi.application'
+
+ASGI_APPLICATION = "doceo.routing.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -144,3 +159,10 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'soportedoceo@gmail.com'
 EMAIL_HOST_PASSWORD = '$oport3doc3o@@'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# SETTING REDIS AS A CELERY BROKER
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

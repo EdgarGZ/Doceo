@@ -7,6 +7,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from apps.users.models import Usuario
 from apps.knowledge_area.models import SubAreasEspecialidad
+from apps.tutorships.models import HorarioTutoria
+from apps.tutor.models import Tutor
+
+# Constants
+from doceo.constants import SUBAREAS
 
 
 class EditProfileTutorForm(forms.Form):
@@ -79,65 +84,84 @@ class AddSubAreaForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        self.__subareas = (
-            ('programación', [
-                ('paradigmas', 'Paradigmas de Programación'),
-                ('poo', 'Programación Orientada a Objetos'),
-                ('back end', 'Back End'),
-                ('patrones', 'Patrones de Diseño'),
-            ]),
-            ('matemáticas', [
-                ('algebra', 'Algebra Lineal'),
-                ('calculo', 'Calculo'),
-                ('computacionales', 'Matematicas Computacionales'),
-                ('estadistica', 'Probabilidad y Estadistica'),
-            ]),
-            ('redes', [
-                ('diseño', 'Diseño de redes'),
-                ('configuracion', 'Configuración de Redes'),
-                ('administracion', 'Administración de Redes'),
-            ]),
-            ('front end', [
-                ('ui', 'User Interfaces'),
-                ('ux', 'User Experience'),
-                ('maquetado', 'Maquetado de interfaces'),
-            ]),
-            ('ingles', [
-                ('ingles uno', 'Ingles I'),
-                ('ingles dos', 'Ingles II'),
-                ('ingles tres', 'Ingles III'),
-                ('ingles cuatro', 'Ingles IV'),
-                ('preparación', 'Preparación TOEFL'),
-            ]),
-            ('bases de datos', [
-                ('administracion', 'Administración de B.D.'),
-                ('sql', 'SQL'),
-                ('no sql', 'NoSQL'),
-            ]),
-            ('paralelo', [
-                ('cuda', 'Cuda'),
-                ('pycuda', 'PyCuda'),
-            ]),
-            ('imagenes', [
-                ('movimiento', 'Detección de Movimiento'),
-                ('objetos', 'Detección de Objetos'),
-            ]),
-        )
+        self.__subareas = SUBAREAS
         self.request = kwargs.pop("request")
         super(AddSubAreaForm, self).__init__(*args, **kwargs)
-        self.fields['subareas'].choices = [subarea for subarea in self.__subareas if subarea[0] == self.request.user.usuario.tutor.area_especialidad]
-
+        self.subareas_user = [subarea.subarea for subarea in SubAreasEspecialidad.objects.filter(tutor = self.request.user.usuario.tutor)]
+        self.subarea_choices = [subarea for subarea in self.__subareas if subarea[0] == self.request.user.usuario.tutor.area_especialidad]
+        if len(self.subareas_user) > 0:
+            self.fields['subareas'].choices = [subarea for subareas_tuple in self.subarea_choices for subarea in subareas_tuple[1] if subarea[0] not in self.subareas_user]
+        else: 
+            self.fields['subareas'].choices = [subarea for subareas_tuple in self.subarea_choices for subarea in subareas_tuple[1]]
 
     def clean_subareas(self):
 
         subarea = self.cleaned_data['subareas']
         subareas_list = [subarea[1] for subarea in self.__subareas if subarea[0] == self.request.user.usuario.tutor.area_especialidad]
+        subareas_aux = [subareas[0] for subareas_tuple in subareas_list for subareas in subareas_tuple]
 
-        for subareas_tuple in subareas_list:
-            for subareas in subareas_tuple:
-                subareas_aux.append(subareas)
-        
         if subarea not in subareas_aux:
             raise forms.ValidationError(f'Valor invalido {subarea}.')
 
         return subarea
+
+
+class AddHorarioForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        self.weekdays = kwargs.pop("weekdays")
+        super().__init__(*args, **kwargs)
+
+    area_especialidad = forms.CharField(max_length=50)
+    subarea_especialidad = forms.CharField(max_length=50)
+    dia = forms.CharField(max_length=50)
+    hora_inicio = forms.TimeField()
+    hora_fin = forms.TimeField()
+    lugar = forms.CharField(max_length=100)
+
+    def clean_area_especialidad(self):
+        area_especialidad = self.cleaned_data['area_especialidad']
+        text = area_especialidad.split(' ')
+        for i, string in enumerate(text):
+            string = string[0].lower() + string[1:]
+            text[i] = string
+        area_especialidad = ' '.join(text)
+        tutor_area_esp = Tutor.objects.get(usuario=self.request.user.usuario)
+
+        if area_especialidad != tutor_area_esp.area_especialidad:
+            raise forms.ValidationError('¡La área de especialidad no coincide!')
+
+        return area_especialidad
+
+    def clean_subarea_especialidad(self):
+        subarea_especialidad = self.cleaned_data['subarea_especialidad']
+        text = subarea_especialidad.split(' ')
+        for i, string in enumerate(text):
+            string = string[0].lower() + string[1:]
+            text[i] = string
+        subarea_especialidad = ' '.join(text)
+        tutor_subareas = SubAreasEspecialidad.objects.filter(tutor=self.request.user.usuario.tutor)
+
+        for result in tutor_subareas:
+            if subarea_especialidad != result.subarea:
+                raise forms.ValidationError('¡La subárea no coincide!')
+
+        return subarea_especialidad
+
+    def clean_dia(self):
+        dia = self.cleaned_data['dia']
+        weekdays = self.weekdays
+
+        if dia not in weekdays:
+            raise forms.ValidationError('Escoga un día de los que se muestran en el select')
+
+        return dia
+
+    def clean_lugar(self):
+        lugar = self.cleaned_data['lugar']
+
+        if lugar == "":
+            raise forms.ValidationError('Campo obligatorio. No dejar en blanco')
+
+        return lugar

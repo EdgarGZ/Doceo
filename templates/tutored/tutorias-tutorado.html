@@ -1,5 +1,6 @@
 {% extends 'tutored/index.html' %}
 {% load staticfiles %}
+{% load tutored_tags %}
 
 {% block title %}
 Título de la página
@@ -38,14 +39,14 @@ Título de la página
 			</div>
 
 			<ul class="flex-column">
-				<li><a href=""><img src="{% static 'img/us.png' %}">Perfil</a></li>
-				<li><a href=""><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href="{% url 'tutored:tutored' user.username %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
+				<li><a href="{% url 'tutored:tutorias' user.username %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
 				<li><a href=""><img src="{% static 'img/historial.png' %}">Historial</a></li>
 				<li><a href=""><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
 			</ul>
 
 			<ul class="flex-column logout">
-				<li><a href=""><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
+				<li><a href="{% url 'users:logout' %}"><img src="{% static 'img/logout.png' %}">Cerrar sesión</a></li>
 			</ul>
 		</div>
 
@@ -90,18 +91,23 @@ Título de la página
 	        </div>
 
 	        <div class="col-xs-12 col-md-12 busqueda">
-	        	<details>
-				  <summary>Matemáticas</summary>
-					<div class="col-xs-12 col-md-3 horario">
-		        		<h3>Álgebra lineal</h3>
-		        		<p><b>Sesión:</b> Lunes 5:00 PM</p>
-		        		<p><b>Tutor:</b> Daniel Gutiérrez Gómez</p>
-		        		<div class="col-xs-12 col-md-12 flex botones">
-		        			<input type="submit" onclick="agendarTutoria()" value="Agendar" class="col-md-5 finalizar">
-		        			<input type="submit" value="Ver perfil" class="col-md-5 guardar">
-		        		</div>
-		        	</div>
-				</details>
+				{% for tutoria in tutorias %}
+					<details>
+					<summary>{{ tutoria.area_especialidad|uppercase }}</summary>
+						<div class="col-xs-12 col-md-3 horario">
+							<h3>{{ tutoria.subarea_especialidad.subarea|verbose_name }}</h3>
+							<p><b>Sesión:</b> {{ tutoria.dia }} de {{ tutoria.hora_inicio|date:"H:i a" }} a {{ tutoria.hora_final|date:"H:i a" }}</p>
+							<p><b>Tutor:</b> {{ tutoria.tutor.usuario.nombre }}</p>
+							<div class="col-xs-12 col-md-12 flex botones">
+								<input type="submit" onclick="agendarTutoria()" value="Agendar" class="col-md-5 finalizar">
+								<input type="submit" value="Ver perfil" class="col-md-5 guardar">
+							</div>
+						</div>
+					</details>
+				{% empty %}
+					<br>
+					<p><strong>No hay tutorias ofertadas.</strong></p>
+				{% endfor %}
 	        </div>
 
 			
