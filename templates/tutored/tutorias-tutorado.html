@@ -11,19 +11,11 @@ Título de la página
 
 	<!-- modal -->
 	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="notificacion">
-		<p class="b">Programación en Python</p>
-		<p class="b">Martes 20 de noviembre</p>
-		<p class="b">11:00 AM - 12:00 PM</p>
-		<p>Importante: Debe de estar al pendiente de la confirmación por parte del tutor.</p>
-		<div class="flex botonera">
-			<input class="cancelar" type="submit" name="" value="Cancelar" onclick="cancelarAgenda()">
-			<input class="guardar" type="submit" name="" value="Aceptar" onclick="aceptarTuto()">
-		</div>
 	</div>
 
 	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="tutoCheck">
-		<h2>Tutoría agendada</h2>
-		<p>Se ha agregado a tus horarios</p>
+		<h2>Solicitud de tutoría enviada</h2>
+		<p>Se te notificará cuando el tutor haya dado una respuesta.</p>
 		<img src="{% static 'img/check.png' %}" class="check">
 	</div>
 
@@ -98,8 +90,9 @@ Título de la página
 							<h3>{{ tutoria.subarea_especialidad.subarea|verbose_name }}</h3>
 							<p><b>Sesión:</b> {{ tutoria.dia }} de {{ tutoria.hora_inicio|date:"H:i a" }} a {{ tutoria.hora_final|date:"H:i a" }}</p>
 							<p><b>Tutor:</b> {{ tutoria.tutor.usuario.nombre }}</p>
+							<p style="display: none;">{{ tutoria.id }}</p>
 							<div class="col-xs-12 col-md-12 flex botones">
-								<input type="submit" onclick="agendarTutoria()" value="Agendar" class="col-md-5 finalizar">
+								<input type="submit" onclick="" id="tutorship" value="Agendar" class="col-md-5 finalizar">
 								<input type="submit" value="Ver perfil" class="col-md-5 guardar">
 							</div>
 						</div>

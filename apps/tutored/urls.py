@@ -37,4 +37,9 @@ urlpatterns = [
         view=views.TutoriasTutoradoView.as_view(),
         name='tutorias'
     ),
+    path(
+        route='<username>/tutorias/schedule/tutorship/<id>/',
+        view=views.ScheduleTutorship.as_view(),
+        name='tutorias'
+    ),
 ]

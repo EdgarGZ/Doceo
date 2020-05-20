@@ -161,8 +161,9 @@ EMAIL_HOST_PASSWORD = '$oport3doc3o@@'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # SETTING REDIS AS A CELERY BROKER
+INSTALLED_APPS += ['doceo.celery.CeleryAppConfig']
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

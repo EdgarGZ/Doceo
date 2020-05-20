@@ -30,15 +30,7 @@
 		<img src="{% static 'img/trash.png' %}" class="check">
 	</div>
 
-	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="notificacion">
-		<p>Guadalupe Ortiz Mendoza solicitó una de tus tutorías:</p>
-		<p class="b">Programación en Python</p>
-		<p class="b">Martes 20 de noviembre</p>
-		<p class="b">11:00 AM - 12:00 PM</p>
-		<div class="flex botonera">
-			<input class="cancelar" type="submit" name="" value="Denegar" onclick="denegarTutoria()">
-			<input class="guardar" type="submit" name="" value="Aceptar" onclick="aceptarTuto()">
-		</div>
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="notificacionPersistida">
 	</div>
 
 	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="tutoCheck">
@@ -48,7 +40,8 @@
 	</div>
 
 	<!-- fin de modal -->
-
+	<div class="col-md-4 col-md-offset-4 col-xs-11 col-sm-5 molde" id="notificacion">
+	</div>
 	<!-- contenido -->
 
 	<div class="wrapper" id="wrapper">
@@ -60,7 +53,7 @@
 
 			<ul class="flex-column">
 				<li><a href="{% url 'tutor:tutor' user.username %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
-				<li><a href="{% url 'tutor:tutorias' user.username %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href="{% url 'tutor:tutorias' user.username %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías&nbsp;&nbsp;&nbsp;{% if numero_notificaciones > 0 %}<span id="notificacionBadge" style="background: red;" class="badge badge-warning">{{ numero_notificaciones }}</span>{% else %}<span id="notificacionBadge" class="badge badge-warning">{{ numero_notificaciones }}</span>{% endif %}</a></li>
 				<li><a href=""><img src="{% static 'img/historial.png' %}">Historial</a></li>
 				<li><a href=""><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
 			</ul>
@@ -72,8 +65,14 @@
 
 		<div class="content col-xs-12" id="content">
 			<h1>Notificaciones</h1>
-			<div class="col-xs-12 col-md-12 notificaciones">
-				<p class="" id="pendiente"><a href="">Guadalupe Ortiz Mendoza</a> solicitó la tutoría Paradigmas de la Programación | <a onclick="verNoti()">Ver detalles</a></p>
+			<div id="insertarNotificacion">
+				{% for notificacion in notificaciones %}
+					<div class="col-xs-12 col-md-12 notificaciones">
+						<p class="" id="pendiente"><a href="">{{ notificacion.tutorado.nombre }}</a> solicitó la tutoría {{ notificacion.tutoria.subarea_especialidad.subarea|verbose_name|uppercase }} | <a onclick="verNoti({{ notificacion.id }})">Ver detalles</a></p>
+					</div>
+				{% empty %}
+					<p class="col-xs-12 col-md-12 notificaciones" id="noNotificacions">No tienes notificaciones</p>
+				{% endfor %}
 			</div>
 			<div class="top col-xs-12 col-md-12">
 				<button type="button" id="sidebarCollapse" class="navbar-btn">
@@ -86,19 +85,21 @@
 			</div>
 
 			<div class="col-xs-12 col-md-12 tutorias">
-				<div class="tutoria flex-column">
-					<div class="media-dos bd2">
-						<p class="a">Matemáticas</p>
-						<p>Cálculo diferencial</p>
+				{% for tutoria in mis_tutorias %}
+					<div class="tutoria flex-column">
+						<div class="media-dos bd2">
+							<p class="a">{{ tutoria.tutoria.area_especialidad|uppercase }}</p>
+							<p>{{ tutoria.tutoria.subarea_especialidad.subarea|verbose_name }}</p>
+						</div>
+						<img src="{% static 'img/perfil.png' %}">
+						<div class="media-tres flex-column">
+							<p>{{ tutoria.tutorado.nombre }}</p>
+							<p>{{ tutoria.fecha }}</p>
+							<p>{{ tutoria.tutoria.hora_inicio }} - {{ tutoria.tutoria.hora_final }}</p>
+							<a href="">Opciones</a>
+						</div>
 					</div>
-					<img src="{% static 'img/perfil.png' %}">
-					<div class="media-tres flex-column">
-						<p>María Mendoza López</p>
-						<p>Lunes 19</p>
-						<p>1:00 PM - 2:00 PM</p>
-						<a href="">Opciones</a>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
 
 			<h1>Horarios</h1>
@@ -125,7 +126,7 @@
 					<div class="col-xs-12 col-md-12">
 						<b class="">Área de especialidad </b>
 						<span class="col-xs-12 col-md-10">
-							<input type="text" name="area_especialidad" value="{{ tutor.area_especialidad|uppercase }}" class="dato" style="cursor: default;">
+							<input type="text" id="area_especialidad" name="area_especialidad" value="{{ tutor.area_especialidad|uppercase }}" class="dato" style="cursor: default;">
 							{%comment%}<select class="dato">
 								<option></option>
 							</select>{%endcomment%}
@@ -138,7 +139,7 @@
 						<b>Subárea de especialidad </b>
 						<span class="col-xs-12 col-md-10">
 						{% if mis_subareas|length > 0 %}
-							<select class="dato" name="subarea_especialidad">
+							<select class="dato" id="subarea_especialidad" name="subarea_especialidad">
 								{% for subarea in mis_subareas %}
 								<option value="{{ subarea.0 }}">{{ subarea.1 }}</option>
 								{% endfor %}
@@ -154,7 +155,7 @@
 					<div class="fecha">
 						<div class="col-xs-12">
 							<b>Día </b><span class="col-xs-12 col-md-8">
-								<select class="dato" name="dia">
+								<select class="dato" id="dia" name="dia">
 									{% for day in weekdays %}
 										<option value="{{ day.format }}">{{ day.format }}</option>
 									{% endfor %}
@@ -162,21 +163,21 @@
 							</span>
 						</div>
 						<div class="col-xs-12">
-							<b>H. Inicio </b><span class="col-xs-12 col-md-8"><input name="hora_inicio" type="time" min="00:00" max="24:00" step="600" class="dato"></span>
+							<b>H. Inicio </b><span class="col-xs-12 col-md-8"><input id="hora_inicio" name="hora_inicio" type="time" min="00:00" max="24:00" step="600" class="dato"></span>
 						</div>
 						<div class="col-xs-12">
-							<b>H. Fin </b><span class="col-xs-12 col-md-8"><input name="hora_fin" type="time" min="00:00" max="24:00" step="600" class="dato"></span>
+							<b>H. Fin </b><span class="col-xs-12 col-md-8"><input id="hora_fin" name="hora_fin" type="time" min="00:00" max="24:00" step="600" class="dato"></span>
 						</div>
 					</div>
 					<div class="col-xs-12 col-md-12">
-						<b>Lugar de encuentro </b><span class="col-xs-12 col-md-10"><input type="text" name="lugar" class="dato" placeholder="Escribe aquí el lugar de encuentro"></span>
+						<b>Lugar de encuentro </b><span class="col-xs-12 col-md-10"><input id="lugar" type="text" name="lugar" class="dato" placeholder="Escribe aquí el lugar de encuentro"></span>
 						{% for error in form.lugar.errors %}
 							<b style="color: red; width: 100%;">{{ error }}</b>
 						{% endfor%}
 					</div>
 
 					<div class="col-xs-12 col-md-12 botones">
-						<input type="submit" onclick="cambiosHechos()" value="Ofertar horarios" class="col-md-2 guardar pull-right">
+						<input type="submit" onclick="cambiosHechos();nuevaTutoria()" value="Ofertar horarios" class="col-md-2 guardar pull-right">
 						{% comment %}<input type="submit" onclick="borrarCampos()" value="Borrar" class="col-md-2 cancelar">{% endcomment %}
 					</div>
 				</form>

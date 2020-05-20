@@ -25,15 +25,13 @@
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="{% static 'js/funciones.js' %}"></script>
-    
-  
 
     {% block extracss %}
     {% endblock extracss %}
 
 </head>
 <body>
-    <p id="usser" style="display: none">{{ request.user.usuario.id }}</p>
+    <p id="userIdentifier" style="display: none">{{ request.user.username }}</p>
     {% block content %}
     {% endblock %}
     
@@ -43,66 +41,7 @@
     </header> {% endcomment %}
     
     {% comment %} <footer class="container blockquote-footer">{% block footer %}{% endblock %}</footer> {% endcomment %}
-
-    <script>
-
-        let user = document.getElementById('usser').textContent;
-		var loc = window.location
-		var wsStart = "ws://127.0.0.1:8000/ws/users/notifications/{{ request.user.username }}/"
-		if (loc.protocol == "https:"){
-			wsStart = "wss://"
-		}
-		var webSocketEndpoint =  wsStart  // ws : wss   // Websocket URL, Same on as mentioned in the routing.py
-	
-		var socket = new WebSocket(webSocketEndpoint) // Creating a new Web Socket Connection
-	
-		// Socket On receive message Functionality
-		socket.onmessage = function(e){
-			console.log('message', e)
-			console.log(e.data) // Access the notification data
-			//$("body").append("<h3>"+e.data+"</h3>")
-			// Can write any functionality based on your requirement
-		}
-	
-		// Socket Connet Functionality
-		socket.onopen = function(e){
-			console.log('open', e)
-		}
-	
-		// Socket Error Functionality
-		socket.onerror = function(e){
-			console.log('error', e)
-		}
-	
-		// Socket close Functionality
-		socket.onclose = function(e){
-			console.log('closed', e)
-		}
-        
-        setTimeout(function () {
-            nuevaTutoria();
-        }, 5000);
-        
-        function mandarMensaje(data) {
-            try {
-                // Mandamos el mensaje con todos los parametros de objeto data( ...data )
-                socket.send(JSON.stringify({ ...data }))
-            } catch (error) {
-                console.error(error.message)
-            }
-        }
-
-        function nuevaTutoria() {
-            mandarMensaje({
-                accion: 'notify_tutorship',
-                id: user,
-                horario: 1,
-            })
-        }
-
-        
-    </script>
-    
+    <script type="text/javascript" src="{% static 'js/websocketTutor.js' %}"></script>
 </body>
 
 </html>

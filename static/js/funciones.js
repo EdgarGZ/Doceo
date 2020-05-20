@@ -1,3 +1,9 @@
+function crearTemplate(HTMLString){
+    const html = document.implementation.createHTMLDocument();
+    html.body.innerHTML = HTMLString;
+    return html.body.children[0]
+}
+
 // modal principal bg
 function modal(){
 	document.querySelector('.bg').classList.toggle('ver-bg');
@@ -151,19 +157,34 @@ function finalizarTuto(){
 	document.getElementById('tutoFinalizada').classList.toggle('ver-molde');
 }
 
+async function aceptarTutoria(tutoria, notificacion) {
+	const response = await fetch(`accept/tutorship/${tutoria}/${notificacion}/`, {
+        method: 'POST',
+    });
+	const resp = await response.json();
+	if(resp.data == "success"){
+		cancelarAgenda();
+		aceptarTuto();
+		document.querySelector('.bg').classList.toggle('ver-bg');
+		setTimeout(() => {
+			location.reload();
+		}, 5000)
+	}
+}
+
 function aceptarTuto(){
 	document.getElementById('tutoCheck').classList.toggle('ver-molde');
 	document.getElementById('notificacion').classList.remove('ver-molde');
 	setTimeout(function(){
 		document.getElementById('tutoCheck').classList.remove('ver-molde');
 		modal();
-	}, 1000);
+	}, 5000);
 }
 
 function denegarTutoria(){
-	document.getElementById('notificacion').classList.remove('ver-molde');
+	document.getElementById('notificacionPersistida').classList.remove('ver-molde');
 	document.querySelector('.bg').classList.remove('ver-bg');
-	document.getElementById('pendiente').innerHTML="No hay notificaciones pendientes";
+	document.getElementById('notificacionModalPersistida').remove();
 }
 
 function cancelarTutoriaC(){
@@ -182,9 +203,29 @@ function finalizarTutoriaC(){
 }
 
 // notificacion
-function verNoti(){
+async function verNoti(tutoriaId){
+	const NOTIFICACION_CONTAINER = document.getElementById('notificacionPersistida');
+	const response = await fetch(`get/tutorship/notification/${tutoriaId}/`, {
+        method: 'POST',
+    });
+	const resp = await response.json();
+	const TUTORSHIP_DATA = resp.data;
+	const MODAL_TUTORSHIP = `
+		<div id="notificacionModalPersistida">
+			<p>${TUTORSHIP_DATA.tutorado} solicitó una de tus tutorías:</p>
+			<p class="b">${TUTORSHIP_DATA.tutoria}</p>
+			<p class="b">Este ${TUTORSHIP_DATA.dia} de este mes</p>
+			<p class="b">${TUTORSHIP_DATA.hora_inicio} - ${TUTORSHIP_DATA.hora_fin}</p>
+			<div class="flex botonera">
+				<input class="cancelar" type="submit" name="" value="Denegar" onclick="denegarTutoria()">
+				<input class="guardar" type="submit" name="" value="Aceptar" onclick="aceptarTutoria(${TUTORSHIP_DATA.id_tutoria}, ${TUTORSHIP_DATA.id_notificacion});aceptarTutoriaWS(${TUTORSHIP_DATA.tutoria}, ${TUTORSHIP_DATA.tutorado_username})">
+			</div>
+		</div>
+    `;
+    const HTML_MODAL_PERSISTENTE = crearTemplate(MODAL_TUTORSHIP);
+    NOTIFICACION_CONTAINER.append(HTML_MODAL_PERSISTENTE);
 	modal();
-	document.getElementById('notificacion').classList.toggle('ver-molde');
+	document.getElementById('notificacionPersistida').classList.toggle('ver-molde');
 }
 
 // borrar horario finalizarTutoria

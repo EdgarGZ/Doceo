@@ -4,8 +4,8 @@ from asgiref.sync import async_to_sync
 import json
 
 # Models 
-from apps.users.models import User, Usuario
-from apps.tutorships.models import HorarioTutoria, NotificacionNuevoHorario
+from apps.users.models import User
+from apps.tutorships.models import HorarioTutoria
 
 
 class NotificationConsumer(WebsocketConsumer):
@@ -28,27 +28,33 @@ class NotificationConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         self.close()
-        # pass
 
-    # Eventos Tutor
+    def notify_schedule_tutorship(self, event):
+        tutoria = HorarioTutoria.objects.get(id=event["referencia"])
+        mensaje = f'{ event["user"] } quiere pedirte una tutoria de { event["tutoship_area"] } para el proximo { tutoria.dia } de este mes!.'
+        async_to_sync(self.channel_layer.group_send)(
+            tutoria.tutor.usuario.user.username,
+            {
+                'type': 'notify',
+                'message': mensaje
+            }
+        )
 
-    def notify_new_tutorship(self, event):
-        tutoreds = Usuario.objects.filter(is_tutorado=True)
-        tutor = Usuario.objects.get(id=event["id"])
-        tutorship = HorarioTutoria.objects.get(id=event["horario"])
-        mensaje = f'{tutor.nombre} ha ofertado una nueva tutoria de {tutorship.area_especialidad}!.'
-        for tutored in tutoreds:
-            # NotificacionNuevoHorario.objects.create(tutor=tutor, tutorado=tutored, tutoria=tutorship, mensaje=mensaje)
-            async_to_sync(self.channel_layer.group_send)(
-                tutored.user.username,
-                {
-                    'type': 'notify',
-                    'mensaje': f'{tutor.user.username} ha ofertado una nueva tutoria de {tutorship.area_especialidad}!. '
-                }
-            )
+    def notify_tutored_accepted_tutorship(self, event):
+        tutorado = User.objects.get(username=event['tutored'])
+        tutor = User.objects.get(username=self.room_name)
+        mensaje = f'{ tutor.username } ha aceptado tu solicitud para tomar la tutoría { event["tutorship"] }!.'
+        async_to_sync(self.channel_layer.group_send)(
+            tutorado.username,
+            {
+                'type': 'notify',
+                'message': mensaje
+            }
+        )
 
     acciones = {
-        'notify_tutorship': notify_new_tutorship,
+        'notify_schedule_tutorship': notify_schedule_tutorship,
+        'notify_tutored_accepted_tutorship': notify_tutored_accepted_tutorship
     }
 
     def receive(self, text_data):
@@ -56,4 +62,4 @@ class NotificationConsumer(WebsocketConsumer):
         self.acciones[data['accion']](self, data)
 
     def notify(self, event):
-        self.send(text_data=json.dumps(event["mensaje"]))
+        self.send(text_data=json.dumps(event["message"]))

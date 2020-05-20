@@ -17,10 +17,9 @@ app = Celery('doceo')
 #   should have a `CELERY_` prefix.
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
-
 class CeleryAppConfig(AppConfig):
-    # name = 'doceo.settings'
-    # verbose_name = 'Celery Config'
+    name = 'doceo'
+    verbose_name = 'Celery Config'
 
     def ready(self):
         installed_apps = [app_config.name for app_config in apps.get_app_configs()]
@@ -29,4 +28,4 @@ class CeleryAppConfig(AppConfig):
 
 @app.task(bind=True)
 def debug_task(self):
-    print(f'Request: {self.request!r}')  # pragma: no cover
+    print('Request: {}'.format(self.request))  # pragma: no cover

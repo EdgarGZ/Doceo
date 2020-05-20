@@ -46,5 +46,20 @@ urlpatterns = [
         route='<username>/tutorias/add/schedule/',
         view=views.OfertarHorariosTutorView.as_view(),
         name='schedule'
-    )
+    ),
+    path(
+        route='<username>/tutorias/get/last/notification/',
+        view=views.LastNotificationReceived.as_view(),
+        name='last_notification'
+    ),
+    path(
+        route='<username>/tutorias/get/tutorship/notification/<id>/',
+        view=views.TutoshipJsonResponse.as_view(),
+        name='tutorship_json'
+    ),
+    path(
+        route='<username>/tutorias/accept/tutorship/<tutoria>/<notificacion>/',
+        view=views.AcceptTutoshipJsonResponse.as_view(),
+        name='accept_tutorship_json'
+    ),
 ]

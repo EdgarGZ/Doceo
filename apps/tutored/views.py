@@ -1,15 +1,19 @@
 # Django
 from django.shortcuts import render, reverse
-from django.views.generic import DetailView, FormView, TemplateView
+from django.views.generic import DetailView, FormView, TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import update_session_auth_hash
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.core.mail import send_mail
 
 # Models
 from django.contrib.auth.models import User
 from apps.users.models import Usuario
 from apps.tutored.models import Tutorado
-from apps.tutorships.models import HorarioTutoria
+from apps.tutor.models import Tutor
+from apps.tutorships.models import HorarioTutoria, NotificacionAgendarTutoria
 
 # Forms
 from apps.tutored.forms import EditProfileTutoredForm, ChangePasswordForm, ChangeProfilePicForm
@@ -17,6 +21,12 @@ from apps.tutored.forms import EditProfileTutoredForm, ChangePasswordForm, Chang
 # Utilities
 from datetime import datetime, date
 
+# Celery Tasks
+from apps.tutored.tasks import notify_tutored_by_email
+
+# Constants
+from doceo.constants import SUBAREAS
+from doceo.settings import DEFAULT_FROM_EMAIL
 
 # Create your views here.
 class TutoredDetailView(LoginRequiredMixin, DetailView):
@@ -175,7 +185,7 @@ class ChangeProfilePicView(LoginRequiredMixin, FormView):
 
 
 class TutoriasTutoradoView(LoginRequiredMixin, DetailView):
-    """ Tutor tutorships view """
+    """ Tutored tutorships view """
 
     template_name = 'tutored/tutorias-tutorado.html'
     slug_field = 'username'
@@ -194,13 +204,45 @@ class TutoriasTutoradoView(LoginRequiredMixin, DetailView):
 
     def get_tutorias_disponibles(self):
         hoy = datetime.today().day
-        tutorias = HorarioTutoria.objects.all()
-        tutorias_vigentes = []
+        tutorias = HorarioTutoria.objects.filter(disponible=True) & HorarioTutoria.objects.filter(en_espera=False)
+        return tutorias
+        # tutorias_vigentes = []
 
-        for tutoria in tutorias:
-            dia = tutoria.dia
-            dia = dia.split(', ')
-            if int(dia[1]) > int(hoy):
-                tutorias_vigentes.append(tutoria)
+        # for tutoria in tutorias:
+        #     dia = tutoria.dia
+        #     dia = dia.split(', ')
+        #     if int(dia[1]) > int(hoy):
+        #         tutorias_vigentes.append(tutoria)
 
-        return tutorias_vigentes
+        # return tutorias_vigentes
+
+
+class ScheduleTutorship(LoginRequiredMixin, View):
+    """ Tutored schedule tutorship view """
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ScheduleTutorship, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        tutorship_id = kwargs['id']
+        tutoria = HorarioTutoria.objects.get(id=tutorship_id)
+        tutor = Tutor.objects.get(usuario=tutoria.tutor)
+        tutor_usuario = Usuario.objects.get(id=tutor.pk)
+        tutorado = User.objects.get(username=kwargs['username'])
+        tutorado_usuario = Usuario.objects.get(user=tutorado)
+        tutoria.en_espera = True
+        tutoria.save()
+        nueva_notificacion_de_tutoria = NotificacionAgendarTutoria.objects.create(tutor=tutor_usuario, tutorado=tutorado_usuario, tutoria=tutoria, visto_tutorado=True, estado=1)
+        # tutorship_name = self.get_verbose_name(tutoria.subarea_especialidad.subarea)
+        # subject = f'New tutorship request for {tutorship_name} on Doceo'
+        # message = f'Hey {tutor.usuario.user.username}, the Doceo team have news for you!\n\n{tutorado.username} ({tutorado.usuario.correo}) wants to take your tutorship {tutorship_name}!\n\nGo to www.doceo.com and let {tutorado.username} know if you wanna give your tutorship to her/him.'
+        # Mandar email
+        # send_mail(subject, message, DEFAULT_FROM_EMAIL, [tutor.usuario.correo])
+        # notify_tutored_by_email.delay(tutor.usuario.user.id, tutorado.usuario.user.id,tutorship_id)
+        return JsonResponse({'data': 'success'})
+
+    def get_verbose_name(self, text):
+        only_subareas_array = [subarea[1] for subarea in SUBAREAS]
+        subarea = [subarea[1] for subareas in only_subareas_array for subarea in subareas if subarea[0] == text]
+        return subarea[0]

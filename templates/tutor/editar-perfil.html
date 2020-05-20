@@ -41,7 +41,7 @@
 
 			<ul class="flex-column">
 				<li><a href="{% url 'tutor:tutor' user.username %}"><img src="{% static 'img/us.png' %}">Perfil</a></li>
-				<li><a href="{% url 'tutor:tutorias' user.username %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías</a></li>
+				<li><a href="{% url 'tutor:tutorias' user.username %}"><img src="{% static 'img/tutorias.png' %}">Mis tutorías&nbsp;&nbsp;&nbsp;{% if numero_notificaciones > 0 %}<span id="notificacionBadge" style="background: red;" class="badge badge-warning">{{ numero_notificaciones }}</span>{% else %}<span id="notificacionBadge" class="badge badge-warning">{{ numero_notificaciones }}</span>{% endif %}</a></li>
 				<li><a href=""><img src="{% static 'img/historial.png' %}">Historial</a></li>
 				<li><a href=""><img src="{% static 'img/qa.png' %}">Preguntas frecuentes</a></li>
 			</ul>

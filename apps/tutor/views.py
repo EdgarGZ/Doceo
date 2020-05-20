@@ -1,16 +1,18 @@
 # Djangi
 from django.shortcuts import render, reverse
-from django.views.generic import DetailView, FormView, TemplateView, CreateView
+from django.views.generic import DetailView, FormView, TemplateView, CreateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import update_session_auth_hash
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 # Models
 from django.contrib.auth.models import User
 from apps.users.models import Usuario
 from apps.tutor.models import Tutor
 from apps.knowledge_area.models import SubAreasEspecialidad
-from apps.tutorships.models import HorarioTutoria
+from apps.tutorships.models import HorarioTutoria, NotificacionAgendarTutoria, Tutoria, TutoresTutorado, EstadoTutoria
 
 # Forms
 from apps.tutor.forms import EditProfileTutorForm, ChangePasswordForm, \
@@ -43,6 +45,7 @@ class TutorDetailView(LoginRequiredMixin, DetailView):
         context['tutor'] = Tutor.objects.get(usuario=context['usuario'])
         context['mis_subareas'] = self.get_mis_subareas()
         context['subarea_form'] = AddSubAreaForm(request=self.request)
+        context['numero_notificaciones'] = self.get_number_of_notifications()
         return context
 
     def get_subareas(self, **kwargs):
@@ -58,20 +61,10 @@ class TutorDetailView(LoginRequiredMixin, DetailView):
         mis_subareas = [subareat for subareal in subareas_list for subareat in subareal for sag in subareas_guardadas if sag.subarea == subareat[0]]
 
         return mis_subareas
+    
+    def get_number_of_notifications(self):
+        return len(NotificacionAgendarTutoria.objects.filter(tutor=self.request.user.usuario))
 
-    def notificacion(self):
-        # Django Channels Notifications Test
-        current_user = self.request.user
-        channel_layer = get_channel_layer()
-        data = 'notification - {}'.format(str(datetime.now()))
-        # Trigger message sent to group
-        async_to_sync(channel_layer.group_send)(
-            str(current_user.id),  # Channel Name, Should always be string
-            {
-                "type": "notify",   # Custom Function written in the consumers.py
-                "text": data,
-            },
-        )
 
 class AddSubAreasView(LoginRequiredMixin, FormView):
     template_name = 'tutor/perfil-tutor-vistat.html'
@@ -83,6 +76,7 @@ class AddSubAreasView(LoginRequiredMixin, FormView):
         user = User.objects.get(id=self.request.user.id)
         context['usuario'] = Usuario.objects.get(user=user)
         context['tutor'] = Tutor.objects.get(usuario=context['usuario'])
+        context['numero_notificaciones'] = self.get_number_of_notifications()
         return context
 
     def form_invalid(self, form):
@@ -111,6 +105,9 @@ class AddSubAreasView(LoginRequiredMixin, FormView):
     def get_success_url(self):
         success_url = reverse('tutor:tutor', kwargs={'username': self.request.user.username})
         return str(success_url)
+    
+    def get_number_of_notifications(self):
+        return len(NotificacionAgendarTutoria.objects.filter(tutor=self.request.user.usuario))
 
 
 class TutorEditView(LoginRequiredMixin, DetailView):
@@ -128,7 +125,11 @@ class TutorEditView(LoginRequiredMixin, DetailView):
         user = self.get_object()
         context['usuario'] = Usuario.objects.get(user=user)
         context['tutor'] = Tutor.objects.get(usuario=context['usuario'])
+        context['numero_notificaciones'] = self.get_number_of_notifications()
         return context
+    
+    def get_number_of_notifications(self):
+        return len(NotificacionAgendarTutoria.objects.filter(tutor=self.request.user.usuario))
 
 
 class SaveEditProfileView(LoginRequiredMixin, FormView):
@@ -141,6 +142,7 @@ class SaveEditProfileView(LoginRequiredMixin, FormView):
         user = User.objects.get(id=self.request.user.id)
         context['usuario'] = Usuario.objects.get(user=user)
         context['tutor'] = Tutor.objects.get(usuario=context['usuario'])
+        context['numero_notificaciones'] = self.get_number_of_notifications()
         return context
 
     def form_invalid(self, form):
@@ -171,6 +173,9 @@ class SaveEditProfileView(LoginRequiredMixin, FormView):
     def get_success_url(self):
         success_url = reverse('tutor:tutor', kwargs={'username': self.request.user.username})
         return str(success_url)
+    
+    def get_number_of_notifications(self):
+        return len(NotificacionAgendarTutoria.objects.filter(tutor=self.request.user.usuario))
 
 
 class ChangePasswordView(LoginRequiredMixin, FormView):
@@ -182,6 +187,7 @@ class ChangePasswordView(LoginRequiredMixin, FormView):
         user = User.objects.get(id=self.request.user.id)
         kwargs['usuario'] = Usuario.objects.get(user=user)
         kwargs['tutor'] = Tutor.objects.get(usuario=kwargs['usuario'])
+        context['numero_notificaciones'] = self.get_number_of_notifications()
         return super().get_context_data(**kwargs)
 
     def form_invalid(self, form):
@@ -214,6 +220,9 @@ class ChangePasswordView(LoginRequiredMixin, FormView):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+    
+    def get_number_of_notifications(self):
+        return len(NotificacionAgendarTutoria.objects.filter(tutor=self.request.user.usuario))
 
 
 class ChangeProfilePicView(LoginRequiredMixin, FormView):
@@ -225,6 +234,7 @@ class ChangeProfilePicView(LoginRequiredMixin, FormView):
         user = User.objects.get(id=self.request.user.id)
         kwargs['usuario'] = Usuario.objects.get(user=user)
         kwargs['tutor'] = Tutor.objects.get(usuario=kwargs['usuario'])
+        context['numero_notificaciones'] = self.get_number_of_notifications()
         return super().get_context_data(**kwargs)
 
     def form_invalid(self, form):
@@ -248,6 +258,9 @@ class ChangeProfilePicView(LoginRequiredMixin, FormView):
     def get_success_url(self):
         success_url = reverse('tutor:tutor', kwargs={'username': self.request.user.username})
         return str(success_url)
+    
+    def get_number_of_notifications(self):
+        return len(NotificacionAgendarTutoria.objects.filter(tutor=self.request.user.usuario))
 
 
 class TutoriasTutorView(LoginRequiredMixin, DetailView):
@@ -266,6 +279,9 @@ class TutoriasTutorView(LoginRequiredMixin, DetailView):
         context['mis_subareas'] = self.get_mis_subareas()
         context['weekdays'] = self.get_calendario()
         context['horarios'] = self.get_mis_horarios()
+        context['notificaciones'] = self.get_notifications()
+        context['numero_notificaciones'] = self.get_number_of_notifications()
+        context['mis_tutorias'] = Tutoria.objects.filter(tutor=context['usuario']) & Tutoria.objects.filter(estado_tutoria__estado=0)
         return context
 
     def get_mis_horarios(self):
@@ -310,6 +326,12 @@ class TutoriasTutorView(LoginRequiredMixin, DetailView):
                 labor_days.append({"day": i, "format": f'{TRANSLATE_DAYS[date(current_year, current_month, i).strftime("%A")]}, {i}'})
 
         return labor_days
+
+    def get_notifications(self):
+        return NotificacionAgendarTutoria.objects.filter(tutor=self.request.user.usuario) & NotificacionAgendarTutoria.objects.filter(visto_tutorado=False)
+    
+    def get_number_of_notifications(self):
+        return len(NotificacionAgendarTutoria.objects.filter(tutor=self.request.user.usuario) & NotificacionAgendarTutoria.objects.filter(visto_tutorado=False))
 
 
 class OfertarHorariosTutorView(LoginRequiredMixin, FormView):
@@ -395,3 +417,99 @@ class OfertarHorariosTutorView(LoginRequiredMixin, FormView):
                 labor_days.append({"day": i, "format": f'{TRANSLATE_DAYS[date(current_year, current_month, i).strftime("%A")]}, {i}'})
 
         return labor_days
+
+
+class LastNotificationReceived(LoginRequiredMixin, View):
+    """ Tutored schedule tutorship view """
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(LastNotificationReceived, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        tutor = User.objects.get(username=kwargs['username'])
+        tutor_usuario = Usuario.objects.get(user=tutor)
+        last_notification = NotificacionAgendarTutoria.objects.filter(tutor=tutor_usuario).order_by('-fecha')[:1]
+        data = {
+            'tutorado': last_notification[0].tutorado.nombre,
+            'tutoria': self.get_verbose_name(last_notification[0].tutoria.subarea_especialidad.subarea),
+            'dia': last_notification[0].tutoria.dia,
+            'hora_inicio': last_notification[0].tutoria.hora_inicio,
+            'hora_fin': last_notification[0].tutoria.hora_final,
+            'id_tutoria': last_notification[0].tutoria.id,
+            'id_notificacion': last_notification[0].id
+        }
+        return JsonResponse({'data': data})
+
+    def get_verbose_name(self, text):
+        only_subareas_array = [subarea[1] for subarea in SUBAREAS]
+        subarea = [subarea[1] for subareas in only_subareas_array for subarea in subareas if subarea[0] == text]
+        return subarea[0]
+
+
+class TutoshipJsonResponse(LoginRequiredMixin, View):
+    """ Tutored schedule tutorship view """
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(TutoshipJsonResponse, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        tutoria_notificacion = NotificacionAgendarTutoria.objects.get(id=kwargs['id'])
+        data = {
+            'tutorado': tutoria_notificacion.tutorado.nombre,
+            'tutorado_username': tutoria_notificacion.tutorado.user.username,
+            'tutoria': self.get_verbose_name(tutoria_notificacion.tutoria.subarea_especialidad.subarea),
+            'dia': tutoria_notificacion.tutoria.dia,
+            'hora_inicio': tutoria_notificacion.tutoria.hora_inicio,
+            'hora_fin': tutoria_notificacion.tutoria.hora_final,
+            'id_tutoria': tutoria_notificacion.tutoria.id,
+            'id_notificacion': tutoria_notificacion.id
+        }
+        return JsonResponse({'data': data})
+
+    def get_verbose_name(self, text):
+        only_subareas_array = [subarea[1] for subarea in SUBAREAS]
+        subarea = [subarea[1] for subareas in only_subareas_array for subarea in subareas if subarea[0] == text]
+        return subarea[0]
+
+
+class AcceptTutoshipJsonResponse(LoginRequiredMixin, View):
+    """ Tutored schedule tutorship view """
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(AcceptTutoshipJsonResponse, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+        tutoria_notificacion = NotificacionAgendarTutoria.objects.get(id=kwargs['notificacion'])
+        tutoria = HorarioTutoria.objects.get(id=kwargs['tutoria'])
+        tutoria_notificacion.visto_tutor = True
+        tutoria_notificacion.save()
+        tutoria.disponible = False
+        tutoria.save()
+        estado = EstadoTutoria.objects.create(estado=0)
+        Tutoria.objects.create(tutor=tutoria_notificacion.tutor, tutorado=tutoria_notificacion.tutorado, tutoria=tutoria, estado_tutoria=estado, fecha=f'{tutoria.dia} de {MONTHS[datetime.today().month - 1]}')
+        TutoresTutorado.objects.create(tutor=tutoria_notificacion.tutor, tutorado=tutoria_notificacion.tutorado)
+        return JsonResponse({'data': 'success'})
+
+
+# class TutoshipDataJsonResponse(LoginRequiredMixin, View):
+#     """ Tutored schedule tutorship view """
+    
+#     @method_decorator(csrf_exempt)
+#     def dispatch(self, request, *args, **kwargs):
+#         return super(AcceptTutoshipJsonResponse, self).dispatch(request, *args, **kwargs)
+    
+#     def post(self, request, *args, **kwargs):
+#         tutoria_notificacion = NotificacionAgendarTutoria.objects.get(id=kwargs['notificacion'])
+#         tutoria = HorarioTutoria.objects.get(id=kwargs['tutoria'])
+#         tutoria_notificacion.visto_tutor = True
+#         tutoria_notificacion.save()
+#         tutoria.disponible = False
+#         tutoria.save()
+#         estado = EstadoTutoria.objects.create(estado=0)
+#         Tutoria.objects.create(tutor=tutoria_notificacion.tutor, tutorado=tutoria_notificacion.tutorado, tutoria=tutoria, estado_tutoria=estado, fecha=f'{tutoria.dia} de {MONTHS[datetime.today().month - 1]}')
+#         TutoresTutorado.objects.create(tutor=tutoria_notificacion.tutor, tutorado=tutoria_notificacion.tutorado)
+#         return JsonResponse({'data': 'success'})
